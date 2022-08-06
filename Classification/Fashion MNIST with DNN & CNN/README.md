@@ -31,3 +31,23 @@ Convolutional Neural Network와 Deep Neural Network의 비교를 위해 먼저 C
 이를 위해서 view함수를 사용하여 이미지의 Height와 Width에 해당하는 부분을 28 x 28 = 784로 크기를 변경해 주었습니다.
 
 학습률은 0.001, loss 함수로는 Cross Entropy Loss를 선택했으며, optimizer로 Adam Optimizer를 선택했습니다.
+
+# Cell 10
+설정한 epoch만큼 모델을 train 했습니다. 
+Train을 수행 하면서 test data가 들어있는 test_loader로부터 데이터를 불러와 학습이 잘 진행되고 있는지 확인하기 위해 모델이 예산한 값과 실제 값이 얼마나 차이가 나는지 
+지속적으로 확인했으며, 500번의 iteration마다 Loss, Accuracy 값을 Print 했습니다.
+
+<img width="581" alt="스크린샷 2022-08-07 오전 12 39 07" src="https://user-images.githubusercontent.com/52812351/183255911-fb7bf47f-ecf6-40a1-8cd2-1488b70833b0.png">
+
+최종적으로 86%의 성능을 보였습니다.
+
+# Cell 12-13
+DNN 모델에 대한 성능을 평가해 보았기에, 이번엔 Convolutional Neural Network를 생성해 보았습니다.
+Sequential 방식으로 (Conv Layer + 배치 정규화 + ReLU 활성화 함수 + 맥스 풀링) 이렇게 
+
+두개의 레이어를 구성했고 Feature Extracting 부분이 종료되면 output으로 나온 Feature Map을 view 함수를 사용하여 Fully Connected Layer에 맞는 shape로 바꿔줬습니다.
+그 이후로 FC 레이어를 통과하며, 최종적으로 10개의 텐서를 반환하도록 설계했습니다. 
+
+<img width="588" alt="스크린샷 2022-08-07 오전 12 50 15" src="https://user-images.githubusercontent.com/52812351/183256280-c1c38871-c5b9-48c4-9599-07548097d599.png">
+
+DNN의 경우와 동일하게 학습을 진행하였으며, 정확도는 약간 더 높았습니다.
