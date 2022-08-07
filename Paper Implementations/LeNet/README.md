@@ -90,3 +90,25 @@ batch_iterator를 통해 불러온 input의 사이즈는 [32, 3, 224, 224]로, �
 마지막에는 Softmax 활성화 함수를 사용하여 [0, 1]의 범위로 예측한 결과를 받아서 0.5보다 클 경우 강아지, 0.5 이하일 경우 고양이로 분류하도록 설계했습니다.
 
 
+## 옵티마이저와 손실 함수 정의
+
+<img width="555" alt="스크린샷 2022-08-07 오후 4 29 23" src="https://user-images.githubusercontent.com/52812351/183280217-b803c3ca-9cde-4146-a82e-861bfb362e8d.png">
+
+원 논문에서는 옵티마이저로 전체 샘플에서 하나의 샘플만 추출하고 그것의 기울기만 반영하는 SGD를 사용하였지만 이번 구현에서는 모멘텀 SGD를 사용했습니다. 모멘텀 SGD는 SGD에 관성이 추가된 것으로, 매번 기울기를 구하지만 가중치를 수정하기 전에 이전 수정 방향을 참고하여 같은 방향으로 일정한 비율만 수정되게 하는 방법입니다. 손실 함수는 크로스 엔트로피를 사용했습니다.
+
+## 모델 학습 함수 정의
+
+<img width="746" alt="스크린샷 2022-08-07 오후 4 35 52" src="https://user-images.githubusercontent.com/52812351/183280438-6fab7dff-7bfd-4950-ae20-674fbf86dfc6.png">
+
+모델 학습에 걸렸던 시간을 추적할 수 있게 설계했고, 매 epoch마다 train과 valid를 번갈아 수행하며 해당 epoch에서 발생한 loss와 총 정답 갯수를 바탕으로 구한 정확도를 표기하였습니다.
+실행하고 있는 phase가 'train'일 때만 torch.set_grad_enabled(phase == 'train')을 통해 기울기 연산이 활성화 되게 설정했습니다.
+
+## 모델 학습
+
+<img width="610" alt="스크린샷 2022-08-07 오후 4 42 55" src="https://user-images.githubusercontent.com/52812351/183280681-5c5a90f7-5c95-4e07-800c-aad5ce47cb50.png">
+
+총 30회의 epoch동안 학습을 진행하였고, 결과는 다음과 같았습니다.
+
+<img width="242" alt="스크린샷 2022-08-07 오후 4 43 29" src="https://user-images.githubusercontent.com/52812351/183280699-a894d88a-dbeb-439e-ac8d-d1f8eab273d9.png">
+
+
