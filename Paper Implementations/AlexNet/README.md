@@ -24,11 +24,11 @@ AlexNet with Cat vs Dog Classification problem
 <img width="685" alt="스크린샷 2022-08-07 오후 5 23 29" src="https://user-images.githubusercontent.com/52812351/183282101-deafff15-7ecd-46ee-ae30-f3502fb93f74.png">
 
 #### ReLU 활성화 함수의 사용
-  기존의 방식에서는 활성화 함수로 Sigmoid 함수와 tanh 함수를 주로 사용했습니다 (LeNet에선 tanh 함수만 사용). 하지만 경사 하강법을 기반으로 모델을 훈련시킬 때 이러한 saturating nonlinearities들은 입력값이 양극단으로 일정 수준 이상으로만 커지면 편미분을 진행할 때 dL/dw가 0에 가까이 수렴하게 되므로, w의 업데이트가 없어지는 saturation 현상, 더욱 더 나아가면 Gradient Vanishing 현상이 발생합니다. 때문에 ReLU와 같은 non-saturating nonlinearity보다 수렴이 어려울 수 밖에 없습니다. 
+  > 기존의 방식에서는 활성화 함수로 Sigmoid 함수와 tanh 함수를 주로 사용했습니다 (LeNet에선 tanh 함수만 사용). 하지만 경사 하강법을 기반으로 모델을 훈련시킬 때 이러한 saturating nonlinearities들은 입력값이 양극단으로 일정 수준 이상으로만 커지면 편미분을 진행할 때 dL/dw가 0에 가까이 수렴하게 되므로, w의 업데이트가 없어지는 saturation 현상, 더욱 더 나아가면 Gradient Vanishing 현상이 발생합니다. 때문에 ReLU와 같은 non-saturating nonlinearity보다 수렴이 어려울 수 밖에 없습니다. 
   실제로 동일한 조건에서 활성화 함수만 ReLU vs tanh로 설정하고 실험을 진행했을 때, Deep convolutional neural network는 ReLU 함수와 같이 작동했을 때 tanh보다 몇배 이상 빠른 속도를 냈다고 합니다. 
   
 #### 다수의 GPU들을 활용한 model training
-  AlexNet test 당시에 활용된 GTX 580 GPU 한대에는 오직 3GB의 메모리 밖에 없어서 네트워크의 사이즈가 제한되었다고 합니다. 그래서 연구진들은 하나의 네트워크를 두 대의 GPU에 spread시켰고, 원활한 학습 진행을 위해 고도로 최적화된 2d Convolution 연산을 진행했다고 합니다.
+  > AlexNet test 당시에 활용된 GTX 580 GPU 한대에는 오직 3GB의 메모리 밖에 없어서 네트워크의 사이즈가 제한되었다고 합니다. 그래서 연구진들은 하나의 네트워크를 두 대의 GPU에 spread시켰고, 원활한 학습 진행을 위해 고도로 최적화된 2d Convolution 연산을 진행했다고 합니다.
 
 #### 오버래핑 풀링
   > 전통적으로 풀링을 진행할 때는 stride와 kernel_size를 동일하게 하여 한 영역이 한번의 풀링만 적용되게 설정했습니다. AlexNet에서는 kernel_size를 stride보다 크게 설정하여
