@@ -40,14 +40,14 @@ AlexNet with Cat vs Dog Classification problem
 
 ## 모델 구조에 대해
 
-입력: 3 x 224 x 224
-C1: k_size = 11, n_filters = 96, stride = 4
-Max_Pool: k_size = 3, stride = 2
-C2: k_size = 5, n_filters = 256, stride = 1
-C3, C4: k_size = 3, n_filters = 384, stride = 1
-C5: k_size = 3, n_filters = 256, stride = 1
-FC1, Fc2: out_size = 4096
-FC3: out_size = 1000
+* 입력: 3 x 224 x 224
+* C1: k_size = 11, n_filters = 96, stride = 4
+* Max_Pool: k_size = 3, stride = 2
+* C2: k_size = 5, n_filters = 256, stride = 1
+* C3, C4: k_size = 3, n_filters = 384, stride = 1
+* C5: k_size = 3, n_filters = 256, stride = 1
+* FC1, Fc2: out_size = 4096
+* FC3: out_size = 1000
 
 
 
