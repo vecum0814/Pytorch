@@ -15,3 +15,5 @@ torch.nn.Dropout(p)는 p만큼의 비율로 텐서의 값이 0이 되고, 0이 �
 # Cross Entropy 손실 함수의 특징이란?
 
 # Adam Optimizer가 가장 폭 넓게 채용되는 이유는?
+
+## Momentum이란?
