@@ -29,8 +29,9 @@ AlexNet with Cat vs Dog Classification problem
   
   > 다수의 GPU들을 활용한 model training
   AlexNet test 당시에 활용된 GTX 580 GPU 한대에는 오직 3GB의 메모리 밖에 없어서 네트워크의 사이즈가 제한되었다고 합니다. 그래서 연구진들은 하나의 네트워크를 두 대의 GPU에 spread시켰고, 원활한 학습 진행을 위해 고도로 최적화된 2d Convolution 연산을 진행했다고 합니다.
-  고도로 최적화된 GPU based 2D Convolution 연산
-  
+
+  > 오버래핑 풀링
+  > ㅇㅇ
 
 
 
