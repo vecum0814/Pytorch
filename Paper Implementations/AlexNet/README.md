@@ -38,7 +38,16 @@ AlexNet with Cat vs Dog Classification problem
  > 다양한 모델들의 예측값을 종합해서 최종적인 예측값을 내는 방식은 test error를 줄이는데 매우 효과적인 방법입니다. 하지만 일정 사이즈 이상의 신경망은 훈련하는데만 며칠씩 걸리기 때문에 이와 같은 방법을 실제로 사용하기는 부적절 합니다. AlexNet과 비슷한 시기에 등장한 Dropout은 간단한 조정만으로도 매우 효과적으로 model combination 효과를 낼 수 있습니다. Dropout은 일정 확률로 각 뉴런의 값을 0으로 바꿔주는 방법입니다. 이렇게 "dropped out"된 뉴런은 순전파 과정에서 더 이상 관여를 하지 못하게 되고, 역전파 과정에서도 마찬가지 입니다. 즉, 입력이 들어올 때마다 신경망은 항상 조금씩 다른 형태를 취하게 됩니다. 이러한 방법은 뉴런간의 의존성을 줄일 수 있기 때문에 각각의 뉴런들이 보다 더 주도적으로 특징들을 학습할 수 있게하여 어떤 뉴런들과의 부분 조합을 형성하더라도 효과적으로 작동할 수 있게 도와줍니다.
 
 
+## 모델 구조에 대해
 
+입력: 3 x 224 x 224
+C1: k_size = 11, n_filters = 96, stride = 4
+Max_Pool: k_size = 3, stride = 2
+C2: k_size = 5, n_filters = 256, stride = 1
+C3, C4: k_size = 3, n_filters = 384, stride = 1
+C5: k_size = 3, n_filters = 256, stride = 1
+FC1, Fc2: out_size = 4096
+FC3: out_size = 1000
 
 
 
