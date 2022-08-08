@@ -17,7 +17,7 @@ AlexNet with Cat vs Dog Classification problem
 
 ## AlexNet의 특징
 
-   ###총 8개의 학습 가능한 레이어로 구성된 아키텍쳐
+### 총 8개의 학습 가능한 레이어로 구성된 아키텍쳐
   >AlexNet은 5개의 합성곱 레이어와 3개의 Fully Connected 레이어를 가지고 있어, 2개의 합성곱 레이어와 2개의 Fully Connected 레이어를 가지는 LeNet보다 깊은 아키텍쳐를 가지고 있습니다.
   
   
