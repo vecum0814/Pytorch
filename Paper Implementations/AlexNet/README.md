@@ -91,4 +91,4 @@ iterator를 통해 input의 사이즈를 추출해본 결과, [32, 3, 256, 256]�
 
 <img width="244" alt="스크린샷 2022-08-08 오후 4 20 13" src="https://user-images.githubusercontent.com/52812351/183361900-ca6978af-5f56-40e7-9c78-d359b724fb44.png">
 
-임의로 합성곱 레이어의 필터 사이즈를 수정한 부분, 논문과 같이 두개의 gpu로 학습을 진행하지 않은 부분, optimizer에 weight decay를 적용하는 부분을 생략한 점, 그리고 Local Response Normalization을 적용하지 않은 부분과 무엇보다 학습 데이터가 부족했던 점이 위와 같은 저조한 성과로 이어진것으로 보입니다.
+임의로 합성곱 레이어의 필터 사이즈를 수정한 부분, 논문과 같이 두개의 gpu로 학습을 진행하지 않은 부분, optimizer에 weight decay를 적용하는 부분을 생략한 점, 그리고 ReLU 함수 직전에 Local Response Normalization을 적용하지 않은 부분과 무엇보다 학습 데이터가 부족했던 점이 위와 같은 저조한 성과로 이어진것으로 보입니다.
