@@ -68,4 +68,13 @@ AlexNet은 파라미터를 약 6000만개 사용하는 모델인만큼, 충분�
 논문에서는 128로 batch_size를 설정했지만 kaggle에서 지원하는 GPU의 성능상 batch_size를 32로 설정했습니다.
 iterator를 통해 input의 사이즈를 추출해본 결과, [32, 3, 256, 256]으로 의도대로 나온것을 확인할 수 있었습니다.
 
+## 모델의 네트워크 클래스 정의
+
+<img width="561" alt="스크린샷 2022-08-08 오후 3 38 59" src="https://user-images.githubusercontent.com/52812351/183355020-7f5428af-0e0d-4ffd-8f5c-fb8ca22724bd.png">
+
+위에서 언급한 것처럼, AlexNet은 첫번째 Convolutional Layer부터 두개의 GPU로 Filter들을 분담해가면서 연산을 진행합니다. 하지만 하나의 GPU만을 통해 구현을 하였기 때문에 임의로 합성곱 신경망의 filter size를 수정했으나, kernel size와 stride와 같은 조건은 일치시켰습니다. 
+
+논문에서 언급한것과 같이 첫번째와 두번째 FC 레이어에 대해 Dropout을 적용해주었고, Feature Extractor와 Classifier 를 이어주기 위해 AdaptiveAvgPooling을 사용하여 한 필터마다 6x6 사이즈로 서브샘플링을 진행했습니다.
+
+
 
