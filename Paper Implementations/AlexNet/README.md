@@ -74,7 +74,21 @@ iterator를 통해 input의 사이즈를 추출해본 결과, [32, 3, 256, 256]�
 
 위에서 언급한 것처럼, AlexNet은 첫번째 Convolutional Layer부터 두개의 GPU로 Filter들을 분담해가면서 연산을 진행합니다. 하지만 하나의 GPU만을 통해 구현을 하였기 때문에 임의로 합성곱 신경망의 filter size를 수정했으나, kernel size와 stride와 같은 조건은 일치시켰습니다. 
 
-논문에서 언급한것과 같이 첫번째와 두번째 FC 레이어에 대해 Dropout을 적용해주었고, Feature Extractor와 Classifier 를 이어주기 위해 AdaptiveAvgPooling을 사용하여 한 필터마다 6x6 사이즈로 서브샘플링을 진행했습니다.
+논문에서 언급한것과 같이 첫번째와 두번째 FC 레이어에 대해 Dropout을 적용해주었고, Feature Extractor와 Classifier 를 이어주기 위해 AdaptiveAvgPooling을 사용하여 한 필터마다 6x6 사이즈로 서브샘플링을 진행했습니다. 
 
+또한, 파이토치의 nn.CrossEntropyLoss에서 자체적으로 Softmax 함수를 적용시켜주기 때문에 모델에서는 해당 부분을 포함하지 않았습니다.
 
+## 옵티마이저와 손실 함수 정의
 
+<img width="555" alt="스크린샷 2022-08-08 오후 4 11 26" src="https://user-images.githubusercontent.com/52812351/183360311-5074ef36-48b7-4584-a430-649d0001d0c2.png">
+
+논문에서 언급한것 처럼 옵티마이저로 Stochastic Gradient Descent with Momentum을 차용하였고 모멘텀 계수는 0.9로, 그리고 학습률은 0.001로 설정했습니다.
+손실 함수로는 크로스 엔트로피를 설정했습니다.
+
+## 모델 학습
+
+총 30번의 epoch 동안 학습을 진행하였고, 결과는 다음과 같았습니다.
+
+<img width="244" alt="스크린샷 2022-08-08 오후 4 20 13" src="https://user-images.githubusercontent.com/52812351/183361900-ca6978af-5f56-40e7-9c78-d359b724fb44.png">
+
+임의로 합성곱 레이어의 필터 사이즈를 수정한 부분, 논문과 같이 두개의 gpu로 학습을 진행하지 않은 부분, optimizer에 weight decay를 적용하는 부분을 생략한 점, 그리고 Local Response Normalization을 적용하지 않은 부분과 무엇보다 학습 데이터가 부족했던 점이 위와 같은 저조한 성과로 이어진것으로 보입니다.
