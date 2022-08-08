@@ -51,3 +51,21 @@ AlexNet with Cat vs Dog Classification problem
 
 
 
+# Cat vs Dog 데이터셋으로 AlexNet 구현
+
+## 이미지 데이터셋 전처리
+
+<img width="575" alt="스크린샷 2022-08-08 오후 3 30 13" src="https://user-images.githubusercontent.com/52812351/183353749-de9439ec-3278-427d-bc7b-acf0e0d64e35.png">
+
+AlexNet은 파라미터를 약 6000만개 사용하는 모델인만큼, 충분한 데이터가 없으면 과적합이 발생하는 등 테스트 데이터에 대한 성능이 좋지 않습니다. 데이터를 더 확보하기 위해 논문에서 적용한 horizontal reflection 이외에도 학습시에는 Random Resized Crop 및 Random Rotation을 확률적으로 적용하였고 validation 시에는 이미지 Resize와 Center Crop만 적용하였습니다. Augmentation 적용 후에는 이미지를 텐서 형태로 변환해주고 이미지넷 데이터의 평균과 표준편차를 사용해 정규화를 시켰습니다.
+
+
+## DataLoader
+
+<img width="677" alt="스크린샷 2022-08-08 오후 3 34 41" src="https://user-images.githubusercontent.com/52812351/183354336-bfd3cf21-7c5f-4b7b-ab51-13b87100ac00.png">
+<img width="234" alt="스크린샷 2022-08-08 오후 3 34 53" src="https://user-images.githubusercontent.com/52812351/183354367-d9c2d136-2d31-4043-9ef7-354eb234b645.png">
+
+논문에서는 128로 batch_size를 설정했지만 kaggle에서 지원하는 GPU의 성능상 batch_size를 32로 설정했습니다.
+iterator를 통해 input의 사이즈를 추출해본 결과, [32, 3, 256, 256]으로 의도대로 나온것을 확인할 수 있었습니다.
+
+
