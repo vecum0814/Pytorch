@@ -14,4 +14,5 @@ VGG는 무엇보다 ConvNet 아키텍쳐의 '깊이'에 초점을 맞췄습니�
 #### 3x3 receptive field
   > VGG 이전에 Convolutional Network를 활용하여 이미지 분류에서 좋은 성과를 보였던 모델들은 비교적 큰 사이즈인 11 x 11, 혹은 7 x 7 receptive field를 사용했습니다. 그러나 VGG에서는
   3 x 3 사이즈의 작은 receptive field만을 사용합니다. 논문에 따르면 이것이 좌/우, 상/하, 그리고 중앙의 개념을 캡쳐할 수 있는 가장 작은 사이즈이기에 3 x 3 사이즈를 채택했다고 합니다.
+  
   <img width="302" alt="스크린샷 2022-08-09 오후 4 59 30" src="https://user-images.githubusercontent.com/52812351/183596595-ad68e414-1426-411c-90fb-8a8f0831e86f.png"> <img width="339" alt="스크린샷 2022-08-09 오후 4 59 41" src="https://user-images.githubusercontent.com/52812351/183596633-4d1bed4d-8c5f-457e-bd2d-ad9fda8ddd58.png">
