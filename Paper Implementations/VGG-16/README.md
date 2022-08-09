@@ -23,3 +23,8 @@ VGG는 무엇보다 ConvNet 아키텍쳐의 '깊이'에 초점을 맞췄습니�
 
 >    > #### 학습 파라미터 수의 감소
 >    > Fully Connected Layer와는 달리 Convolutional Network의 경우, 학습 대상인 가중치는 필터의 크기에 따라 결정됩니다. 하나의 Layer에 하나의 필터만 있다고 가정할 경우, 7 x 7 Convolution Layer 1개에 대한 학습 파라미터 갯수는 7 x 7 = 49이지만, 3번의 3 x 3 Convolution Layer의 학습 파라미터 갯수는 3 x 3 x 3 = 27입니다. 즉, 3 x 3 Convolution Layer를 겹쳐서 적용할 경우 7 x 7 Convolution Layer를 한번 적용한것에 비해 약 81% 적은 학습 파라미터 수를 가지며 더욱 빠른 학습 속도와 과적합 예방 효과를 불러올 수 있습니다.
+
+
+#### 가중치 초기화
+  > 논문에서는 잘못된 가중치 초기화는 네트워크가 깊어질 수록 불안정한 gradient에 의해 발생되는 Gradient Vanishing/Exploding을 야기할 수 있기 때문에 올바른 가중치 초기화가 중요하다고 언급했습니다. 이러한 문제를 해결하기 위해 논문에서는 상대적으로 얕은 깊이를 가진 ConvNet configuration Table에서 configuration A의 weight들을  평균이 0, 표준편차가 0.01인 정규분포를 따르는 분포를 바탕으로 random initialise 시키고 학습을 진행하였습니다. 그리고 더욱 깊은 네트워크를 학습할 때 해당 네트워크의 첫 4개의 Convolutionlay Layer와 마지막 3개의 Fully Connected Layer의 weight를 미리 학습해둔 configuration A의 모델의 해당 레이어에 대한 가중치로 초기화 시켜줬습니다. 하지만 논문 제출 후, Glorot 초기화를 사용하면 이러한 사전 훈련 과정 없이 random initialisation을 사용할 수 있다는 것을 깨달았다고 합니다.
+
