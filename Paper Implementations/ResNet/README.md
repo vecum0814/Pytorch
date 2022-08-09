@@ -18,4 +18,17 @@ ResNet을 발표한 Microsoft Research에서도 레이어를 깊게 쌓을 수�
 ## ResNet의 특징
 
 > #### Residual Learning
-> 
+> ResNet에서는 Residual Block를 이용해 네트워크의 최적화 난이도를 낮춥니다. 일반적으로는 네트워크가 입력 데이터인 x를 레이어에 통과시키면서 입력값을 최적의 결과값으로 매핑할 수 있는 H(x)로 fit하길 바랍니다만, 실제로 내재한 매핑인 H(x)를 앞선 layer에서 학습한 정보를 포함하여 곧바로 학습하는 것은 어려우므로 대신 F(x) = H(x) - x를 학습시킵니다. 극단적인 예로, 만약에 identity mapping인 x가 우리가 원하는 optimial이라면, F(x)를 0으로 수렴시키는 방법이 여러개의 비선형 레이어를 통과하면서 identity mapping을 수행하는 것보다 훨씬 쉽습니다.  
+
+<img width="214" alt="스크린샷 2022-08-10 오전 12 21 12" src="https://user-images.githubusercontent.com/52812351/183689753-e39e4007-2930-407c-a760-3b413c9b20cf.png">
+
+<img width="380" alt="스크린샷 2022-08-10 오전 12 35 37" src="https://user-images.githubusercontent.com/52812351/183695207-8127dd54-4a0e-4f71-990b-f84cc75de4b7.png">
+
+> 앞선 Layer에서 학습된 정보인 x를 그대로 identity mapping 해줌으로써, 해당 레이어는 자신 뿐만아니라 이전의 모든 네트워크를 고려해서 학습하기보단, F(x)에 해당하는 범위만 학습할 수 있기 때문에 부담을 덜 수 있고, 입력값 x를 identity mapping으로 감싸서 정보가 손실되지 않게 출력값으로 전달할 수 있습니다. 또한, 이러한 Skip Connection을 적용하여 결과적으로 해당 Residual Block의 식이 F(x) + x가 되고 F(x)가 0이 되는 방향으로 수렴한다면, 미분값은 F'(x) + 1이기 때문에 네트워크가 깊더라도 이전보다 안정적으로 학습이 가능해집니다. 
+
+> 또한, F(x)가 0으로 학습하는 과정에서 단순히 0이 되는 것이 아니라 0으로 학습하면서 기존 CNN과 유사하게 입력값의 비선형적인 특성을 학습할 수 있습니다. 
+
+
+## 모델
+
+
