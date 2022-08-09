@@ -16,3 +16,6 @@ VGG는 무엇보다 ConvNet 아키텍쳐의 '깊이'에 초점을 맞췄습니�
   3 x 3 사이즈의 작은 receptive field만을 사용합니다. 논문에 따르면 이것이 좌/우, 상/하, 그리고 중앙의 개념을 캡쳐할 수 있는 가장 작은 사이즈이기에 3 x 3 사이즈를 채택했다고 합니다.
   
   <img width="302" alt="스크린샷 2022-08-09 오후 4 59 30" src="https://user-images.githubusercontent.com/52812351/183596595-ad68e414-1426-411c-90fb-8a8f0831e86f.png"> <img width="339" alt="스크린샷 2022-08-09 오후 4 59 41" src="https://user-images.githubusercontent.com/52812351/183596633-4d1bed4d-8c5f-457e-bd2d-ad9fda8ddd58.png">
+
+  > 위와 같이 10 x 10 사이즈가 있다면, Stride = 1로 고정되어 있을 때 3차례의 3 x 3 Convolution 연산을 반복한 Feature Map은 7 x 7 Convolution 연산을 한번 적용했을 때와 같은 효과를 볼 수 있습니다. 그렇다면 3 x 3 Convolution Layer를 3번 반복함으로써 7 x 7 Convolution Layer를 한번 적용한는 것에 비해 어떤 장점이 있을까요?
+  >   > #### 결정 함수의 비선형성 증가
