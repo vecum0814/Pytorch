@@ -54,3 +54,14 @@ Convolutional Layer의 채널 갯수는 64를 시작으로 2배씩, 512까지 �
 * Learning rate starting from 0.01, decreased by a factor of 10 when the val set accuracy stopped improving.
 
 결과적으로 학습률은 3번 줄어들었으며, 학습은 74epoch를 끝으로 종료되었다고 합니다. 
+
+
+## Cat vs Dog 데이터셋으로 VGG 구현
+
+## 이미지 데이터셋 전처리
+
+<img width="821" alt="스크린샷 2022-08-09 오후 7 24 32" src="https://user-images.githubusercontent.com/52812351/183625945-c8dc1ef4-3c57-474c-a464-b66bdb84206d.png">
+
+Training 시에는 RandomRotation, Horizontal Flip, Vertical Flip과 같은 data augmentation 방법들이 사용되었고, Tensor 타입으로 바꾼 다음 ImageNet 평균과 표준 편차를 사용해 정규화를 진행하였으며, test 시에 사용할 데이터셋에 대해서는 Resizing, to Tensor, 그리고 동일한 정규화만 적용하였습니다.
+
+
