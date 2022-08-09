@@ -29,6 +29,14 @@ ResNet을 발표한 Microsoft Research에서도 레이어를 깊게 쌓을 수�
 > 또한, F(x)가 0으로 학습하는 과정에서 단순히 0이 되는 것이 아니라 0으로 학습하면서 기존 CNN과 유사하게 입력값의 비선형적인 특성을 학습할 수 있습니다. 
 
 
-## 모델
+## 모델 구조에 대해
+
+기본적으로 VGG의 구성을 따라가고 있습니다.
+Convolutional Layer는 대부분 3 x 3 filter size를 가지고 있으며, 아래의 두 원칙을 따랐습니다.
+
+* 같은 output feature map size를 가진 경우, 같은 필터 갯수를 같도록
+* 만약 feature map size가 반으로 줄었다면, 필터 갯수를 두배로 늘려서 레이어별 시간 복잡도를 유지하도록.
+* 정해진 횟수마다 skit connection을 추가하도록,
+* 필터 갯수가 늘어서 feature map size가 줄었다면, skip connection일때도 이것에 맞춰주기 위해 1 x 1 convolution으로 차원을 맞춰준다.
 
 
