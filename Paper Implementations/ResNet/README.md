@@ -63,6 +63,32 @@ ResNet-18과 ResNet-34가 convn_x layer마다 사용된 convolutional layer의 �
 
 ## main.py
 
- 
+* arparse를 사용하여 다양한 하이퍼 파라미터들을 튜닝할 수 있게 설정했습니다.
+* datasets.py 파일에 접근하여 dataloader를 받아온 다음에, 설정한 batch_size만큼 데이터를 불러오는 trainloader, testlader를 선언했습니다.
+* 이를 training.py 파일의 train_model 함수에 넘겨주었습니다.
+* 현재 train 모드인지 eval 모드인지에 따라 해당하는 작업을 진행하도록 설정했습니다.
+
+## datasets.py
+
+* 학습시 사용할 전처리의 경우 RandomCrop, RandomHorizontalFlip을 확률적으로 적용한 후 텐서로 변환해주고 CIFAR-10 데이터에 대한 평균과 표준편차를 적용하여 정규화를 진행했습니다.
+* 테스트때 사용할 전처리의 경우, 텐서로 변환만 해주고 위와 같은 전처리만 적용 했습니다.
+* 이후엔 목적에 맞는 전처리를 적용하면서 데이터를 불러오고,
+* 각각 DataLoader를 통해 반환해주는 작업을 거치도록 설계했습니다.
+
+## models.py
+
+> ### ResidualBlock(nn.Module):
+> 우선 Residual Block을 정의해줬습니다. 전반적으로 Residual Block이 두개의 Convolutional Layer 이후에 입력값을 skip connection으로 더해주는 방식이었던 것을 고려하여 conv_block과 downsample로 나누어 구성해줬습니다. 
+>  > Conv_block에 대해선 두개의 Convolution Layer를 입력값으로 들어오는 in_channels, out_channels에 맞게 설정해 주었고, 배치 정규화와 ReLU 함수를 추가했습니다.
+>  > Stride가 1이 아니거나 in_channels != out_channels라면, 변화된 크기에 대응해주기 위해 1 x 1 Convolution을 수행하여 다운 샘플링을 진행했습니다.
+
+> #### ResNet(nn.Module):
+> 원 논문에서는 Residual Block 이전의 conv1에서 7 x 7, 64, stride 2의 Convolution 연산과, 3 x 3 max pool, stride 2를 진행해 주었는데요, CIFAR-10 데이터셋 특성상 위와 같은 연산을 동일하게 적용할 경우 이미지 사이즈가 너무 작아질것을 우려하여 kernel size를 3으로 조정해주었고, Max Pooling 과정을 생략했습니다.
+> conv2_x, conv3_x, conv4_x, conv5_x에 대해서는 make_layer라는 내부 함수를 작성해서 상황에 맞는 Residual Block을 알맞은 갯수로 생성할 수 있게 하였습니다.
+
+>> #### modeltype(model):
+>> 터미널 단에서 model 이름을 입력으로 받아, 해당 ResNet 구조에 맞는 Residual Block 덩어리의 갯수를 리스트 형태로 포함하여 ResNet 함수에 ResidualBlock과 함께 전달하여 네트워크를 생성하게 설계했습니다.
+
+
 
 
