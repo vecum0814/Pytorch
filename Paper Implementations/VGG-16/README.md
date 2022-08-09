@@ -28,3 +28,21 @@ VGG는 무엇보다 ConvNet 아키텍쳐의 '깊이'에 초점을 맞췄습니�
 #### 가중치 초기화
   > 논문에서는 잘못된 가중치 초기화는 네트워크가 깊어질 수록 불안정한 gradient에 의해 발생되는 Gradient Vanishing/Exploding을 야기할 수 있기 때문에 올바른 가중치 초기화가 중요하다고 언급했습니다. 이러한 문제를 해결하기 위해 논문에서는 상대적으로 얕은 깊이를 가진 ConvNet configuration Table에서 configuration A의 weight들을  평균이 0, 표준편차가 0.01인 정규분포를 따르는 분포를 바탕으로 random initialise 시키고 학습을 진행하였습니다. 그리고 더욱 깊은 네트워크를 학습할 때 해당 네트워크의 첫 4개의 Convolutionlay Layer와 마지막 3개의 Fully Connected Layer의 weight를 미리 학습해둔 configuration A의 모델의 해당 레이어에 대한 가중치로 초기화 시켜줬습니다. 하지만 논문 제출 후, Glorot 초기화를 사용하면 이러한 사전 훈련 과정 없이 random initialisation을 사용할 수 있다는 것을 깨달았다고 합니다.
 
+
+
+## 모델 구조에 대해
+
+<img width="395" alt="스크린샷 2022-08-09 오후 6 09 29" src="https://user-images.githubusercontent.com/52812351/183610916-1b6368c3-ab30-4b8a-abd9-dadd21fe2fa1.png">
+
+VGG 네트워크는 깊이에 따라 위와 같이 세분화 되어 있습니다. 공통적으로는,
+* 1n Convolution Layers + 3 Fully-Connected Layer로 구성되어 있고,
+* 3 x 3 convolution filter size
+* Stride = 1, Padding = 1
+* Maxpooling of 2 x 2 kernel size with stride of 2 (AlexNet의 Overpolling 방식을 차용하지 않았습니다
+* ReLU
+위와 같은 구조를 공유하고 있습니다.
+
+
+<img width="395" alt="스크린샷 2022-08-09 오후 6 09 29" src="https://user-images.githubusercontent.com/52812351/183610916-1b6368c3-ab30-4b8a-abd9-dadd21fe2fa1.png">
+
+
