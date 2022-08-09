@@ -17,3 +17,5 @@ ResNet을 발표한 Microsoft Research에서도 레이어를 깊게 쌓을 수�
 
 ## ResNet의 특징
 
+> #### Residual Learning
+> 
