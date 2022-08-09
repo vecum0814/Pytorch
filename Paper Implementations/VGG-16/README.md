@@ -64,4 +64,20 @@ Convolutional Layer의 채널 갯수는 64를 시작으로 2배씩, 512까지 �
 
 Training 시에는 RandomRotation, Horizontal Flip, Vertical Flip과 같은 data augmentation 방법들이 사용되었고, Tensor 타입으로 바꾼 다음 ImageNet 평균과 표준 편차를 사용해 정규화를 진행하였으며, test 시에 사용할 데이터셋에 대해서는 Resizing, to Tensor, 그리고 동일한 정규화만 적용하였습니다.
 
+## DataLoader
+
+<img width="461" alt="스크린샷 2022-08-09 오후 7 28 42" src="https://user-images.githubusercontent.com/52812351/183626762-54845d6d-e61d-4c5d-a7d2-0446fc555f75.png">
+
+논문에서는 batch_size를 128로 설정하였지만, 8개로 설정해보았습니다.
+
+## 모델의 네트워크 클래스 정의
+
+VGG-11, VGG-13, VGG-16, 그리고 VGG-19까지 모두 Convolution Layer의 갯수만 다르다는 점에서 착안하여 모든 VGG 모델에 대응할 수 있게 모듈화를 진행해 보았습니다.
+
+<img width="931" alt="스크린샷 2022-08-09 오후 7 33 05" src="https://user-images.githubusercontent.com/52812351/183627550-c092505a-0096-4499-a7f0-b70222dba33a.png">
+
+위와 같은 리스트의 형태로 각 VGG 모델마다 Convolution Layer의 Filter 갯수를 저장해두었고, 'M'이라고 표시된 부분은 MaxPooling을 대응시킬 부분입니다.
+이러한 config들을 사용하여, 유동적으로 layer을 쌓을 수 있게 다음과 같이 구성하였습니다. 원 논문에서 다룬 초기화 방식과는 다르게 Batch Normalization을 통해 초기화 문제를 해결해보았습니다.
+<img width="618" alt="스크린샷 2022-08-09 오후 7 35 10" src="https://user-images.githubusercontent.com/52812351/183627940-e0095a64-7d18-47e3-a007-4e827fa87d9d.png">
+
 
