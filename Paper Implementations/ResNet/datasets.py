@@ -10,14 +10,10 @@ def dataloader(batch_size, trainmode):
 
     test_transf = tr.Compose([tr.ToTensor(), tr.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
 
-    if trainmode == "train":
-        trainset = torchvision.datasets.CIFAR10(root='./data', download = True, train = True, transform = transf)
-        
-    else:
-        trainset = torchvision.datasets.CIFAR10(root='./data', download = True, train = True, transform = test_transf)
+    trainset = torchvision.datasets.CIFAR10(root='./data', download = True, train = True, transform = transf)
+    testset = torchvision.datasets.CIFAR10(root='./data', download = True, train = True, transform = test_transf)
         
     trainloader = DataLoader(trainset, batch_size = batch_size, num_workers = 0)
-    testset = torchvision.datasets.CIFAR10(root = './data', download = True, train = False, transform = test_transf)
     testloader = DataLoader(testset, batch_size = batch_size, shuffle = False, num_workers = 0)
 
     return trainloader, testloader
