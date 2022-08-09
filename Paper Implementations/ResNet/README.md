@@ -53,6 +53,16 @@ Convolutional Layer는 대부분 3 x 3 filter size를 가지고 있으며, 아�
 전반적으로 위와 같은 구조를 지녔습니다.
 
 
+## CIFAR-10 데이터셋으로 ResNet-18, 34 구현
 
+<img width="439" alt="스크린샷 2022-08-10 오전 1 51 27" src="https://user-images.githubusercontent.com/52812351/183710888-9d002bdc-883a-459c-b507-303f67661790.png">
+
+ResNet-18과 ResNet-34가 convn_x layer마다 사용된 convolutional layer의 갯수만 다를 뿐 전반적으로 공통된 구조를 공유하고 있다는걸 확인한 후, VGG를 구현할때와 마찬가지로 비슷하게 모듈화하여 구현하되, convx_n 레이어의 convolutional layer 갯수만 정해진 모델에 따라 바뀔 수 있게 설계해 보았습니다.
+
+이번에는 코드를 기능에 따라 나누어 모듈화 해보았습니다.
+
+## main.py
+
+ 
 
 
