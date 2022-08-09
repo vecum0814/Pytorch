@@ -80,6 +80,7 @@ ResNet-18과 ResNet-34가 convn_x layer마다 사용된 convolutional layer의 �
 > ### ResidualBlock(nn.Module):
 > 우선 Residual Block을 정의해줬습니다. 전반적으로 Residual Block이 두개의 Convolutional Layer 이후에 입력값을 skip connection으로 더해주는 방식이었던 것을 고려하여 conv_block과 downsample로 나누어 구성해줬습니다. 
 >  > Conv_block에 대해선 두개의 Convolution Layer를 입력값으로 들어오는 in_channels, out_channels에 맞게 설정해 주었고, 배치 정규화와 ReLU 함수를 추가했습니다.
+
 >  > Stride가 1이 아니거나 in_channels != out_channels라면, 변화된 크기에 대응해주기 위해 1 x 1 Convolution을 수행하여 다운 샘플링을 진행했습니다.
 
 > #### ResNet(nn.Module):
