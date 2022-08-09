@@ -4,3 +4,6 @@ transforms.ToTensor(), # torchvision의 PIL 라이브러리를 이용하여 이�
 
 
 ## 1 x 1 Convolution이란?
+
+
+## Gradient Vanishing / Exploding에 대해서 설명해주세요
