@@ -80,4 +80,8 @@ VGG-11, VGG-13, VGG-16, 그리고 VGG-19까지 모두 Convolution Layer의 갯�
 이러한 config들을 사용하여, 유동적으로 layer을 쌓을 수 있게 다음과 같이 구성하였습니다. 원 논문에서 다룬 초기화 방식과는 다르게 Batch Normalization을 통해 초기화 문제를 해결해보았습니다.
 <img width="618" alt="스크린샷 2022-08-09 오후 7 35 10" src="https://user-images.githubusercontent.com/52812351/183627940-e0095a64-7d18-47e3-a007-4e827fa87d9d.png">
 
+## 옵티마이저와 손실 함수 정의
+
+<img width="441" alt="스크린샷 2022-08-09 오후 7 43 11" src="https://user-images.githubusercontent.com/52812351/183629274-daaf1152-0924-4ee7-be72-ed43271bd173.png">
+원 논문과는 다르게 옵티마이저로 ADAM 옵티마이저를 사용해보았습니다. 손실 함수에는 CrossEntropyLoss를 사용하였습니다. nn.CrossEntropyLoss() 자체에 Softmax 함수가 내장되어 있기 때문에 모델 설계에는 Softmax 함수를 추가해주지 않았습니다.
 
