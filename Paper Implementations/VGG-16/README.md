@@ -43,7 +43,14 @@ VGG 네트워크는 깊이에 따라 위와 같이 세분화 되어 있습니다
 
 위와 같은 구조를 공유하고 있습니다.
 
+Convolutional Layer의 채널 갯수는 64를 시작으로 2배씩, 512까지 증가하게 되고 중간마다 MaxPooling이 적용되었습니다.
 
-<img width="395" alt="스크린샷 2022-08-09 오후 6 09 29" src="https://user-images.githubusercontent.com/52812351/183610916-1b6368c3-ab30-4b8a-abd9-dadd21fe2fa1.png">
+사용된 최적화 알고리즘은 다음과 같습니다.
 
+* Mini-batch Gradient Descent
+* Momentum(0.9)
+* Weight Decay(L2 Norm)
+* Dropout(0.5)
+* Learning rate starting from 0.01, decreased by a factor of 10 when the val set accuracy stopped improving.
 
+결과적으로 학습률은 3번 줄어들었으며, 학습은 74epoch를 끝으로 종료되었다고 합니다. 
