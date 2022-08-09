@@ -78,6 +78,7 @@ VGG-11, VGG-13, VGG-16, 그리고 VGG-19까지 모두 Convolution Layer의 갯�
 
 위와 같은 리스트의 형태로 각 VGG 모델마다 Convolution Layer의 Filter 갯수를 저장해두었고, 'M'이라고 표시된 부분은 MaxPooling을 대응시킬 부분입니다.
 이러한 config들을 사용하여, 유동적으로 layer을 쌓을 수 있게 다음과 같이 구성하였습니다. 원 논문에서 다룬 초기화 방식과는 다르게 Batch Normalization을 통해 초기화 문제를 해결해보았습니다.
+
 <img width="618" alt="스크린샷 2022-08-09 오후 7 35 10" src="https://user-images.githubusercontent.com/52812351/183627940-e0095a64-7d18-47e3-a007-4e827fa87d9d.png">
 
 ## 옵티마이저와 손실 함수 정의
@@ -85,3 +86,13 @@ VGG-11, VGG-13, VGG-16, 그리고 VGG-19까지 모두 Convolution Layer의 갯�
 <img width="441" alt="스크린샷 2022-08-09 오후 7 43 11" src="https://user-images.githubusercontent.com/52812351/183629274-daaf1152-0924-4ee7-be72-ed43271bd173.png">
 원 논문과는 다르게 옵티마이저로 ADAM 옵티마이저를 사용해보았습니다. 손실 함수에는 CrossEntropyLoss를 사용하였습니다. nn.CrossEntropyLoss() 자체에 Softmax 함수가 내장되어 있기 때문에 모델 설계에는 Softmax 함수를 추가해주지 않았습니다.
 
+## 모델 학습
+간단하게 10개의 epoch를 통해 학습을 진행해 보았지만, 결과가 좋게 나오지 않았습니다.
+
+<img width="308" alt="스크린샷 2022-08-09 오후 7 46 09" src="https://user-images.githubusercontent.com/52812351/183629776-c15839af-d0c1-4237-ab8b-05d72f463bcf.png">
+
+무엇보다 데이터셋이 부족하여 이러한 결과나 나온것 같습니다. 또한, 배치 정규화를 진행할 때는 배치 사이즈가 충분히 커야하는데, batch_size가 8로 설정되어 있는 바람에 배치 정규화를 함으로써 성능이 더 나빠졌다고 추측할 수 있습니다. 
+
+다음은 올바르게 예측한 이미지에 대한 정보입니다.
+
+<img width="1082" alt="스크린샷 2022-08-09 오후 7 48 16" src="https://user-images.githubusercontent.com/52812351/183630133-028bcabf-7dcc-4896-9482-784133d92b72.png">
