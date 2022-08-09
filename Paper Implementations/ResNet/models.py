@@ -53,12 +53,12 @@ class ResNet(nn.Module):
         self.gap = nn.AvgPool2d(4)
         self.fc = nn.Linear(512, num_classes)
 
-    def _make_layer(self, block, planes, num_blocks, stride):
+    def _make_layer(self, block, out_channels, num_blocks, stride):
         strides = [stride] + [1] * (num_blocks - 1)
         layers = []
         for stride in strides:
-            layers.append(block(self.in_channels, planes, stride))
-            self.in_channels = planes
+            layers.append(block(self.in_channels, out_channels, stride))
+            self.in_channels = out_channels
         return nn.Sequential(*layers)
 
     def forward(self, x):
