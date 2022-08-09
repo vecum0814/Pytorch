@@ -83,13 +83,26 @@ ResNet-18과 ResNet-34가 convn_x layer마다 사용된 convolutional layer의 �
 
 >  > Stride가 1이 아니거나 in_channels != out_channels라면, 변화된 크기에 대응해주기 위해 1 x 1 Convolution을 수행하여 다운 샘플링을 진행했습니다.
 
-> #### ResNet(nn.Module):
+> ### ResNet(nn.Module):
 > 원 논문에서는 Residual Block 이전의 conv1에서 7 x 7, 64, stride 2의 Convolution 연산과, 3 x 3 max pool, stride 2를 진행해 주었는데요, CIFAR-10 데이터셋 특성상 위와 같은 연산을 동일하게 적용할 경우 이미지 사이즈가 너무 작아질것을 우려하여 kernel size를 3으로 조정해주었고, Max Pooling 과정을 생략했습니다.
 > conv2_x, conv3_x, conv4_x, conv5_x에 대해서는 make_layer라는 내부 함수를 작성해서 상황에 맞는 Residual Block을 알맞은 갯수로 생성할 수 있게 하였습니다.
 
->> #### modeltype(model):
+> ### modeltype(model):
 >> 터미널 단에서 model 이름을 입력으로 받아, 해당 ResNet 구조에 맞는 Residual Block 덩어리의 갯수를 리스트 형태로 포함하여 ResNet 함수에 ResidualBlock과 함께 전달하여 네트워크를 생성하게 설계했습니다.
 
+## training.py
+
+> ### train_model():
+> __init__ 함수를 통해 메인에서 전반적인 훈련에 대한 사전 준비를 진행하게 됩니다.
+
+> eval 함수를 통해 정확도를 계산하고,
+
+> train시에는 학습을 진행하게 되는데, 원 논문과 다르게 ADAM 옵티마이저를 활용하여 최적화를 진행하였습니다. 학습이 진행되면서 test_loss가 기존의 best test loss보다 낮으면, 해당 모델을 저장하도록 하였습니다.
+
+## tsne.py
+
+Fully Connected 이전의 값으로 tsne를 그려줘야 하기 때문에 모델의 Fully-Connected Layer에 해당하는 부분을 Identity Function으로 대체하였습니다. 이후에는 model.eval()로 설정하고, Fully Connected 이전의 feature들을 numpy로 변환하여 리스트 형태로 가져온 다음에, 불러온 TSNE 함수를 활용해 주었고, 결과는 아래와 같이 나왔습니다.
 
 
+<img width="841" alt="스크린샷 2022-08-10 오전 2 44 25" src="https://user-images.githubusercontent.com/52812351/183723353-1e2daf02-e866-422f-b424-a655df9dfd36.png">
 
