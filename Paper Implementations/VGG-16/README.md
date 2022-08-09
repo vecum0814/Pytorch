@@ -40,6 +40,7 @@ VGG 네트워크는 깊이에 따라 위와 같이 세분화 되어 있습니다
 * Stride = 1, Padding = 1
 * Maxpooling of 2 x 2 kernel size with stride of 2 (AlexNet의 Overpolling 방식을 차용하지 않았습니다
 * ReLU
+
 위와 같은 구조를 공유하고 있습니다.
 
 
