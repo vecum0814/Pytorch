@@ -7,3 +7,5 @@ transforms.ToTensor(), # torchvision의 PIL 라이브러리를 이용하여 이�
 
 
 ## Gradient Vanishing / Exploding에 대해서 설명해주세요
+
+## L1 Norm과 L2 Norm이란?
