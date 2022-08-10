@@ -71,5 +71,25 @@ MNIST Dataset의 이미지 한 장의 크기가 [1, 28, 28]인것을 고려하�
 > 마지막으로 Forwarding 단계에서 view 함수를 활용하여 이미지의 형태로 reshape 시켜주었습니다.
 
 
+### 데이터셋 불러오기 및 전처리
+
+<img width="849" alt="스크린샷 2022-08-10 오후 11 03 58" src="https://user-images.githubusercontent.com/52812351/183921322-9f1376ce-3657-41c9-b8e7-9118c023a526.png">
+
+별도의 data augmentation은 적용하지 않았고 size를 확실히 해주기 위해서 Resize(28)만 적용해였습니다. 이후에는 텐서로 변환하였고, 기존에 0~1 사이였던 픽셀 값을 -1~1로 재설정했습니다.
+배치 사이즈는 128로 설정했습니다.
+
+### 모델 초기화 및 손실 함수, 학습률, 최적화 함수 설계
+
+<img width="657" alt="스크린샷 2022-08-10 오후 11 14 08" src="https://user-images.githubusercontent.com/52812351/183923706-9a4fe13e-38f7-47f8-a595-bd29c43ac9dd.png">
+
+생성자와 판별자 모두 모델 선언을 해주었고, gpu 할당을 해주었습니다.
+
+Loss 함수로 BCELoss를 선언하였고, 학습률은 0.0002로 설정, 그리고 생성자와 판별자 모두 ADAM 옵티마이저로 최적화 시켜보았습니다.
+
+### 모델 학습
+
+<img width="667" alt="스크린샷 2022-08-10 오후 11 15 40" src="https://user-images.githubusercontent.com/52812351/183924072-e93387cb-73ef-44bd-aa02-592c8426e538.png">
+
+
 
 
