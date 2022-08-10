@@ -37,3 +37,8 @@ Generative Adversarial Nets with MNIST dataset
 > 이러한 프레임워크는 다양한 방법들을 통해 구현될 수 있는데, GAN 논문에서는 Generative Model에게 random noise를 multilayer perceptron을 거쳐서 넘겨주는 방식으로 sample을 생성하는 방식을 채용했습니다. 아래의 목적 함수에서 z가 noise인데, P_z(z)라는 z의 확률 분포에서 임의로 하나의 sample을 추출하여 이를 Generative Model에 전달하여 가짜 이미지를 생성하고 Discriminative Model로 하여금 해당 이미지의 진위 여부를 판단하게 합니다.
 > 
 >   <img width="1007" alt="스크린샷 2022-08-10 오후 9 32 02" src="https://user-images.githubusercontent.com/52812351/183901925-59fe179a-b127-452c-9408-c4b80f43552c.png">
+
+최종적으로 Generative Model을 통해 생성된 데이터의 분포가 원본 이미지들의 분포를 따르게 되는것이 목표입니다.
+<img width="142" alt="스크린샷 2022-08-10 오후 9 42 47" src="https://user-images.githubusercontent.com/52812351/183904050-cc763851-96af-4cf2-bfcc-ab5f8322b9de.png">
+
+최종적으로 
