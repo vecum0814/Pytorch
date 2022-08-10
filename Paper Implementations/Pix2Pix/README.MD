@@ -73,4 +73,51 @@ cGan이랑 기존 Vanilla GAN에서 데이터의 모드를 제어할 수 있도�
 
 이미지들은 256 x 256 사이즈로 Resize 시켜주었고, 이 때 BICUBIC 보간법을 적용해주었습니다. 텐서로 변환해 주었고, 이미지 픽셀의 범위를 -1 ~ -1로 정규화 시켜주었습니다. train과 val dataloader 모두 배치 사이즈는 10으로 설정해 주었습니다.
 
+### Generator 설계
+
+<img width="563" alt="스크린샷 2022-08-11 오전 1 57 51" src="https://user-images.githubusercontent.com/52812351/183971785-dbba39f8-f958-476e-8082-692a7c9ec56c.png">
+
+논문에서 언급한대로 U-Net 아키텍쳐를 기반으로, Downsampling과 Upsampling을 순서대로 시행하였습니다. Downsampling을 시행할 때마다 이미지의 Height와 Width를 2배씩 감소 시켰고, 반대로 Upsampling을 시행할 때는 2배씩 증가시켰는데 이 과정에서 Skip Connection을 활용하여 동일한 차원을 가지는 DownSampling layer의 결과값을 concatenation 시켜주어서 low level feature를 더해줬습니다. Upsampling을 진행할 때 일반적인 보간법이 아닌 Transposed Convolution을 활용하여 이 또한 학습 가능하게 설계하였습니다. 마지막에는 출력의 크기를 [3, 256, 256]로 맞춰 이미지를 반환합니다.
+
+
+### Discriminator 설계
+
+<img width="804" alt="스크린샷 2022-08-11 오전 2 04 05" src="https://user-images.githubusercontent.com/52812351/183973402-5235a935-ee98-4705-a3b1-9b3f12cba600.png">
+
+ Discriminator는 Real image와 Condition image 이 둘을 입력으로 받기에 그 둘을 torch.cat을 활용하여 channel 단위로 합쳐줬습니다. 이를 바탕으로 매번 이미지의 Height와 Width를 두배씩 감소시켰고, 마지막에는 논문에서 언급한것과 같이 PatchGan을 적용시키기 위해 (1, 16, 16) 사이즈로 합성곱 연산을 통해 만들어준 다음 반환시킵니다.
+ 
+ 
+ ### 모델 초기화 및 손실 함수, 학습률, 최적화 함수 설계
+ 
+ <img width="709" alt="스크린샷 2022-08-11 오전 2 10 06" src="https://user-images.githubusercontent.com/52812351/183974488-9ff31743-eba0-483e-b313-ccc798e464ac.png">
+ 
+ 논문에서 언급한대로, 가우시안 분포를 따르는 (0.0, 0.02)로 가중치 초기화를 진행해주었습니다. 생성자와 판별자를 선언하고 gpu를 할당했고, 일반적인 GAN 부분에 대해선 MSELoss를 사용했고, 보다 이미지가 ground truth와 가까워지게 L1Loss를 추가로 사용했습니다. 학습률은 0.0002로 설정해두었고, 생성자와 판별자 모두 ADAM 옵티마이저를 사용했습니다.
+ 
+ 
+ ### 모델 학습
+ 
+ <img width="653" alt="스크린샷 2022-08-11 오전 2 58 33" src="https://user-images.githubusercontent.com/52812351/183983641-3bdb1191-3700-4441-bacd-eeeaec003e7c.png">
+
+우선 patchGAN을 활용하여 Discriminator가 patch 단위로 이미지의 진위 여부를 판단할 수 있게 real과 fake를 알맞은 크기로 선언해주었습니다.
+
+#### Generator 학습
+> Generator에 condition image를 입력으로 주어 fake_Photo를 생성했고, 이를 사용하여 Discriminator가 fake Photo와 real Paint를 동시에 입력으로 받았을 때 해당 Photo의 진위 여부를 판단할 수 있게 설정하였고, 실제 정답과 유사하도록 L1 Loss를 사용하여 fake Photo와 real Photo간의 차이를 loss에 추가해 주었습니다.
+
+#### Discriminator 학습
+> Discriminator는 real_Photo와 real_Paint가 동시에 주어졌을 때 해당 Photo가 주어진 조건인 real_Paint의 key feature를 잘 가지고 있는 Photo인지 판별하는 학습 능력을 기르고, 반대로 real_Paint를 통해 생성자가 생성한 fake_Photo를 잘 구분할 수 있는지 학습합니다.
+
+
+### 학습 결과
+세로순으로 조건 이미지 -> 생성된 이미지 -> 원본 이미지 입니다.
+전반적으로 학습이 진행될수록 원본 이미지와 유사하게 이미지가 생성되었음을 확인할 수 있습니다.
+
+<img width="799" alt="스크린샷 2022-08-11 오전 3 04 37" src="https://user-images.githubusercontent.com/52812351/183984794-8d4e931a-0d2e-4fe9-b919-7e9d6fcc8170.png">
+<img width="803" alt="스크린샷 2022-08-11 오전 3 04 49" src="https://user-images.githubusercontent.com/52812351/183984846-3b70347c-1dcd-4fa8-ba24-4971aeadc6f5.png">
+<img width="804" alt="스크린샷 2022-08-11 오전 3 04 59" src="https://user-images.githubusercontent.com/52812351/183984879-08c81973-5389-40f9-8994-a94d6183b2e4.png">
+
+
+
+
+
+
 
