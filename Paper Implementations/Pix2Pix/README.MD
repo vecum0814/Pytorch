@@ -47,5 +47,9 @@ cGan이랑 기존 Vanilla GAN에서 데이터의 모드를 제어할 수 있도�
 <img width="431" alt="스크린샷 2022-08-11 오전 1 26 21" src="https://user-images.githubusercontent.com/52812351/183963075-fe883b0a-c071-440e-b20d-5145c253f72d.png">
 
 
-### PatchGAN 활용
+
+#### PatchGAN 활용
+> 일반적인 GAN 모델들이 Discriminator가 입력으로 들어온 이미지의 전체를 보고 그 이미지의 진위 여부를 판단하는 것과 달리, Pix2Pix에서는 Discriminator가 convolutional PatchGAN classifier의 형태를 띄게 합니다. PatchGAN이란 이미지 전체에 대하여 판별하지 않고, 이미지를 여러개의 패치로 나눈 다음에, 패치 단위로 진위 여부를 판단합니다. 논문에서는 보다 High-frequency한 이미지를 모델링하기 위해서 attention을 local image patches로 restrict하는 것이 합당하다고 주장합니다. 이러한 PatchGAN의 활용은 보다 적은 parameter수로 이어지고 더 빨리 동작하며, 임의의 큰 사이즈의 이미지에서도 잘 동작할 수 있게 해준다고 논문에서는 주장하였습니다.
+
+
 
