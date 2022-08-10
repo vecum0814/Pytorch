@@ -52,4 +52,24 @@ Generative Adversarial Nets with MNIST dataset
 
 
 
+## MNIST를 이용한 GAN 실습
+
+### Discriminator 설계
+
+<img width="372" alt="스크린샷 2022-08-10 오후 10 24 11" src="https://user-images.githubusercontent.com/52812351/183912486-921bbd91-bb20-4d5f-bbb0-d5bbb1165ad8.png">
+
+MNIST Dataset의 이미지 한 장의 크기가 [1, 28, 28]인것을 고려하여 그것에 맞게 Linear Layer로 입력을 받았고, 512 -> 256 -> 그리고 1로 점진적으로 downsampling 시켜줬습니다. Layer 중간마다 LeakyReLU 활성화 함수를 사용해 주었고, 마지막에는 입력으로 들어온 해당 이미지가 실제 데이터셋의 이미지인지 0~1의 확률로 표현할 수 있게 Sigmoid 활성화 함수를 붙여줬습니다.
+
+
+### Generator 설계
+
+<img width="133" alt="스크린샷 2022-08-10 오후 10 28 17" src="https://user-images.githubusercontent.com/52812351/183913367-a9dbfd6d-d08a-41d8-aa93-73efabe8694a.png">
+
+<img width="493" alt="스크린샷 2022-08-10 오후 10 28 05" src="https://user-images.githubusercontent.com/52812351/183913329-3ae3611a-6d02-4f06-88ce-2ad09140f052.png">
+
+> 우선 random noise인 z의 latent dimension으로 100을 설정해주었습니다. layer 설계를 block 단위로 하기 위해 입력 차원과 출력 차원을 받아 해당하는 Linear Layer를 만들고 필요해 따라 정규화를 진행하며 LeakyReLU 활성화 함수까지 추가해주는 Block 함수를 만들었습니다. 이를 바탕으로 처음엔 100의 latent_dim 값 -> 128 -> 256 -> 512 -> 1024의 업샘플링을 거치고, 마지막엔 MNIST 데이터셋 이미지 한개의 사이즈인 1 * 28 * 28로 변환해주고 Tanh 활성화 함수를 통과하게 하여 -1 ~ 1의 값을 가지게 하였습니다. 
+> 마지막으로 Forwarding 단계에서 view 함수를 활용하여 이미지의 형태로 reshape 시켜주었습니다.
+
+
+
 
