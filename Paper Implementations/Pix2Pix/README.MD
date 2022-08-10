@@ -20,3 +20,14 @@ cGan이랑 기존 Vanilla GAN에서 데이터의 모드를 제어할 수 있도�
 이러한 조건을 바탕으로, 사실적인이지만 랜덤한 숫자를 생성했던 vanilla GAN과 달리 아래와 같이 원하는 데이터의 조건을 함께 주어 원하는 category의 output을 얻을 수 있습니다.
 
 <img width="1134" alt="스크린샷 2022-08-11 오전 12 36 49" src="https://user-images.githubusercontent.com/52812351/183946409-a06441b4-74ab-4923-9708-b5da54aee51c.png">
+
+
+## Pix2Pix의 특징
+우선 Image to Image translation이란, 특정한 도메인의 이미지를 다른 도메인으로 바꾼다는 것입니다. Pix2Pix는 학습 과정에서 이미지 x 자체를 조건으로 입력받는 cGAN의 한 유형으로, pixel들을 입력으로 받아 pixel들을 예측한다는 의미를 가집니다.
+
+#### No more random noise, but an image itself
+  > Vanilla GAN과 달리, Pix2Pix의 Generator는 입력으로 random noise를 받는 대신, 실제 이미지 x 자체를 조건으로 입력받아 다른 도메인의 이미지로 출력합니다. 
+  > 이를 활용하여 입력으로 들어온 이미지의 key feature들은 유지하면서 전반적인 style만 mapping 하고픈 style로 변환할 수 있는데요, 반대로 생각해보면 random noise z를 사용하지 않기 때문에 거의 deterministic한 결과 위주로 생성할 수 밖에 없습니다. 물론 이러한 문제는 Dropout을 적용하여 sampling을 할 때마다 결과값이 바뀌도록 유도할 수 있습니다.
+ 
+  > <img width="504" alt="스크린샷 2022-08-11 오전 12 47 04" src="https://user-images.githubusercontent.com/52812351/183950503-ab2a9413-524c-4a85-a7b0-2d91421f663d.png">
+
