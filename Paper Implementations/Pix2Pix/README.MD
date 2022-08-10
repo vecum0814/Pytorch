@@ -52,4 +52,25 @@ cGan이랑 기존 Vanilla GAN에서 데이터의 모드를 제어할 수 있도�
 > 일반적인 GAN 모델들이 Discriminator가 입력으로 들어온 이미지의 전체를 보고 그 이미지의 진위 여부를 판단하는 것과 달리, Pix2Pix에서는 Discriminator가 convolutional PatchGAN classifier의 형태를 띄게 합니다. PatchGAN이란 이미지 전체에 대하여 판별하지 않고, 이미지를 여러개의 패치로 나눈 다음에, 패치 단위로 진위 여부를 판단합니다. 논문에서는 보다 High-frequency한 이미지를 모델링하기 위해서 attention을 local image patches로 restrict하는 것이 합당하다고 주장합니다. 이러한 PatchGAN의 활용은 보다 적은 parameter수로 이어지고 더 빨리 동작하며, 임의의 큰 사이즈의 이미지에서도 잘 동작할 수 있게 해준다고 논문에서는 주장하였습니다.
 
 
+## Facades 데이터셋을 활용한 Pix2Pix 구현
+
+### 이미지 전처리 및 커스텀 데이터셋 설계
+
+<img width="539" alt="스크린샷 2022-08-11 오전 1 46 55" src="https://user-images.githubusercontent.com/52812351/183967293-ca6a2145-0a2a-4a95-b7db-511c4c40a52b.png">
+
+논문에서도 사용된 Facades 데이터셋을 활용하여 labels -> photo image translation을 구현해 보았습니다.
+
+<img width="389" alt="스크린샷 2022-08-11 오전 1 48 46" src="https://user-images.githubusercontent.com/52812351/183968045-acbe6b6f-9b6a-4f52-8492-e14a457dc966.png">
+
+우선 학습용으로 주어진 이미지 하나를 불러와서 이미지의 형태를 살펴보았습니다. Photo에 해당하는 이미지가 왼쪽에 있고, Paint에 해당하는 이미지가 그 오른쪽에 붙어있는 형식의 이미지었고 각 이미지의 크기는 256 x 256이었습니다. 
+
+<img width="625" alt="스크린샷 2022-08-11 오전 1 50 29" src="https://user-images.githubusercontent.com/52812351/183968787-4fe36cbc-38f7-4e0a-920b-cd1204da9df8.png">
+
+때문에 커스텀 데이터셋을 설계할 때 위와 같이 원본 이미지와 조건 이미지를 분리해 주었고, 각각 Real과 Condition으로 반환시켜 주었습니다.
+
+
+<img width="616" alt="스크린샷 2022-08-11 오전 1 52 36" src="https://user-images.githubusercontent.com/52812351/183969604-7a0e207d-c10a-4819-91bc-4bbf7c271b29.png">
+
+이미지들은 256 x 256 사이즈로 Resize 시켜주었고, 이 때 BICUBIC 보간법을 적용해주었습니다. 텐서로 변환해 주었고, 이미지 픽셀의 범위를 -1 ~ -1로 정규화 시켜주었습니다. train과 val dataloader 모두 배치 사이즈는 10으로 설정해 주었습니다.
+
 
