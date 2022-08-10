@@ -23,3 +23,5 @@ gradient vanishing이란 layer가 깊어질수록 미분을 점점 많이 하기
 
 ## Degradation Problem이란?
 With the network depth increasing, accuracy gets saturated and then degrades rapidly.
+
+## Latent Vector란? Latent Space는?
