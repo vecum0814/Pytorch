@@ -22,6 +22,7 @@ Generative Adversarial Nets with MNIST dataset
 
 <img width="694" alt="스크린샷 2022-08-10 오후 9 23 40" src="https://user-images.githubusercontent.com/52812351/183900192-80fde0a7-e996-46bf-a84c-41302541e669.png">
 
+
 > Adversarial Network에서는 분류 모델과 생성 모델을 학습시키는 과정을 서로 주고받으면서 반복합니다.
 ##### Discriminitive Model
 > > 분류 모델의 학습은 크게 두 가지 단계로 이루어져 있습니다.
@@ -89,6 +90,32 @@ Loss 함수로 BCELoss를 선언하였고, 학습률은 0.0002로 설정, 그리
 ### 모델 학습
 
 <img width="667" alt="스크린샷 2022-08-10 오후 11 15 40" src="https://user-images.githubusercontent.com/52812351/183924072-e93387cb-73ef-44bd-aa02-592c8426e538.png">
+
+우선 BCELoss에 target이 될 real과 fake를 각각 매번 batch size에 맞게 1.0과 0.0으로 선언했습니다.
+
+> #### Generator 학습
+> >Generator 먼저 학습을 시작하였고, 평균이 0 표준편차가 1인 정규분포에서 각 이미지마다 latent_dim 만큼의 random noise sampling을 진행하여 이를 Generator에게 입력값으로 전달했습니다.
+
+Generator는 판별자가 Generator로 생성된 이미지에 대해 1에 가까운 값으로 평가하도록 학습을 진행해야 하기 때문에 
+
+        g_loss = adverserial_loss(discriminator(generated_images), real)
+
+를 통해 위와 같은 목적에 맞는 손실값을 설정했고, 이를 바탕으로 역전파 시키고, ADAM 옵티마이저를 통해 weigt update를 진행했습니다.
+
+> #### Discriminator 학습
+> > Generator는 진짜 이미지를 진짜라고 판단할 수 있는 능력, 그리고 가짜 이미지에 대해서는 가짜라고 판단할 수 있는 능력을 학습해야 하기 때문에 아래와 같은 방식으로 학습을 진행하였습니다.
+
+<img width="602" alt="스크린샷 2022-08-10 오후 11 27 15" src="https://user-images.githubusercontent.com/52812351/183926925-8f0e9b97-f165-4e46-9d8c-109cc0055a50.png">
+
+### 학습 결과
+학습이 진행될수록 보다 선명하고 실제와 가까운듯한 MNIST 이미지들이 생성된걸 확인했습니다.
+
+<img width="170" alt="스크린샷 2022-08-10 오후 11 28 21" src="https://user-images.githubusercontent.com/52812351/183927229-9fff55b8-82b4-4644-a58c-fe6bcc2ec946.png">
+<img width="166" alt="스크린샷 2022-08-10 오후 11 28 44" src="https://user-images.githubusercontent.com/52812351/183927317-a632de5b-9701-4c73-acaf-7a8b2a354785.png">
+<img width="169" alt="스크린샷 2022-08-10 오후 11 28 51" src="https://user-images.githubusercontent.com/52812351/183927349-17eb20fa-c010-4ab9-bab0-d9fea1f7c744.png">
+<img width="164" alt="스크린샷 2022-08-10 오후 11 28 58" src="https://user-images.githubusercontent.com/52812351/183927373-24888b28-2516-433c-815f-416d27709cac.png">
+<img width="164" alt="스크린샷 2022-08-10 오후 11 29 06" src="https://user-images.githubusercontent.com/52812351/183927412-a80d27ec-f530-45e7-a3e6-490cfed3ea37.png">
+
 
 
 
