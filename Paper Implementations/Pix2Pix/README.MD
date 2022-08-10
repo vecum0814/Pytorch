@@ -25,9 +25,23 @@ cGan이랑 기존 Vanilla GAN에서 데이터의 모드를 제어할 수 있도�
 ## Pix2Pix의 특징
 우선 Image to Image translation이란, 특정한 도메인의 이미지를 다른 도메인으로 바꾼다는 것입니다. Pix2Pix는 학습 과정에서 이미지 x 자체를 조건으로 입력받는 cGAN의 한 유형으로, pixel들을 입력으로 받아 pixel들을 예측한다는 의미를 가집니다.
 
-#### No more random noise, but an image itself
+#### No more random noise, but image as an input
   > Vanilla GAN과 달리, Pix2Pix의 Generator는 입력으로 random noise를 받는 대신, 실제 이미지 x 자체를 조건으로 입력받아 다른 도메인의 이미지로 출력합니다. 
   > 이를 활용하여 입력으로 들어온 이미지의 key feature들은 유지하면서 전반적인 style만 mapping 하고픈 style로 변환할 수 있는데요, 반대로 생각해보면 random noise z를 사용하지 않기 때문에 거의 deterministic한 결과 위주로 생성할 수 밖에 없습니다. 물론 이러한 문제는 Dropout을 적용하여 sampling을 할 때마다 결과값이 바뀌도록 유도할 수 있습니다.
  
-  > <img width="504" alt="스크린샷 2022-08-11 오전 12 47 04" src="https://user-images.githubusercontent.com/52812351/183950503-ab2a9413-524c-4a85-a7b0-2d91421f663d.png">
+   <img width="504" alt="스크린샷 2022-08-11 오전 12 47 04" src="https://user-images.githubusercontent.com/52812351/183950503-ab2a9413-524c-4a85-a7b0-2d91421f663d.png">
 
+#### U-Net 기반 아키텍쳐
+
+
+> U-Net 아키텍쳐는 low-level information들을 skip connection을 이용해 네트워크를 가로질러 출력단에 가까운 Layer로 이동할 수 있게 해줍니다. 이미지를 조건으로 
+입력받는 Pix2Pix의 특성상 input과 output 사이에서 low-level information을 공유하는것은 매우 중요한데, 아래의 실험 결과와 함께 살펴보겠습니다. 동일한 이미지에 대해 인코더-디코더와 U-Net 구조를 통해 이미지를 생성했는데, 여기서 인코더-디코더는 U-Net에서 skip connection만 제거한 구조입니다. 보시다시피 skip connection을 제거한 상태로 설계한 인코더-디코더는 사실적인 이미지를 생성하는데 실패하였습니다. 
+
+ <img width="505" alt="스크린샷 2022-08-11 오전 12 52 44" src="https://user-images.githubusercontent.com/52812351/183954132-9618db25-2d31-4ec0-a7ec-ac58b809e7eb.png">
+
+ <img width="781" alt="스크린샷 2022-08-11 오전 1 19 38" src="https://user-images.githubusercontent.com/52812351/183961749-1a31ee91-d879-4567-abf4-4eefafe3fbb4.png">
+
+#### 손실 함수
+> GAN은 자체적으로 이미지의 진위 여부를 판단하기 때문에, 다른 생성 모델에 비하여 blurry한 output이 나오는 문제가 적은 편입니다. 하지만 GAN의 성능을 더욱 더 향상시키기 위해, 기본적인 GAN의 목적 함수 뿐만 아니라 L1 loss 함수를 함께 사용하여 현실적인 이미지를 만들 뿐만 아니라 실제 정답과 유사하도록 학습을 시킵니다. L1 loss를 이용하는 이유는 L2 loss를 사용할 때보다 blurry 현상이 덜 발생하였고, Eucledian distance (MSE Loss)를 활용하지 않는 이유는 MSE는 output 결과들에 대한 평균을 만들며 miminimze되는데, 이러한 과정이 blurring을 야기하기 때문입니다.
+
+<img width="431" alt="스크린샷 2022-08-11 오전 1 26 21" src="https://user-images.githubusercontent.com/52812351/183963075-fe883b0a-c071-440e-b20d-5145c253f72d.png">
