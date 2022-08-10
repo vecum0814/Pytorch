@@ -27,3 +27,9 @@ With the network depth increasing, accuracy gets saturated and then degrades rap
 ## Latent Vector란? Latent Space는?
 
 ## 파이썬에서 super 함수는 어떤 기능을 할까?
+
+## Upsampling과 Downsampling 각각의 기능과 사용하는 목적은?
+
+## Transposed Convolution이란??
+<img width="1057" alt="스크린샷 2022-08-11 오전 1 28 58" src="https://user-images.githubusercontent.com/52812351/183963588-628bf7be-f806-4a84-9005-0a272b650ada.png">
+
