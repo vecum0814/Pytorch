@@ -22,8 +22,16 @@ Generative Adversarial Nets with MNIST dataset
 
 <img width="694" alt="스크린샷 2022-08-10 오후 9 23 40" src="https://user-images.githubusercontent.com/52812351/183900192-80fde0a7-e996-46bf-a84c-41302541e669.png">
 
-> 적대적
-<img width="694" alt="스크린샷 2022-08-10 오후 9 23 40" src="https://user-images.githubusercontent.com/52812351/183900192-80fde0a7-e996-46bf-a84c-41302541e669.png">
+> Adversarial Network에서는 분류 모델과 생성 모델을 학습시키는 과정을 서로 주고받으면서 반복합니다.
+##### Discriminitive Model
+> > 분류 모델의 학습은 크게 두 가지 단계로 이루어져 있습니다.
+> > * 진짜 데이터를 입력해서 네트워크가 해당 데이터를 진짜로 분류하도록 학습하는 과정.
+> > * 반대로, 생성 모델에서 생성한 가짜 데이터를 입력해서 해당 데이터를 가짜로 분류하도록 학습하는 과정.
+> > 이 과정을 통해 분류 모델은 진짜 데이터를 진짜로, 가짜 데이터를 가짜로 분류할 수 있게 됩니다.
+
+#### Generative Model
+> > 그렇다면 생성 모델은 위와 같이 학습된 분류 모델을 속이는 방향으로 학습되어야 합니다.
+> > * 생성 모델에서 만들어낸 가짜 데이터를 판별 모델에 입력하고, 가짜 데이터를 진짜라고 분류할 만큼 진짜 데이터와 유사한 데이터를 만들어 내도록 생성 모델을 학습시킵니다.
 
 #### Random Noise
 > 이러한 프레임워크는 다양한 방법들을 통해 구현될 수 있는데, GAN 논문에서는 Generative Model에게 random noise를 multilayer perceptron을 거쳐서 넘겨주는 방식으로 sample을 생성하는 방식을 채용했습니다. 아래의 목적 함수에서 z가 noise인데, P_z(z)라는 z의 확률 분포에서 임의로 하나의 sample을 추출하여 이를 Generative Model에 전달하여 가짜 이미지를 생성하고 Discriminative Model로 하여금 해당 이미지의 진위 여부를 판단하게 합니다.
