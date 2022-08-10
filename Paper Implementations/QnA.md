@@ -25,3 +25,5 @@ gradient vanishing이란 layer가 깊어질수록 미분을 점점 많이 하기
 With the network depth increasing, accuracy gets saturated and then degrades rapidly.
 
 ## Latent Vector란? Latent Space는?
+
+## 파이썬에서 super 함수는 어떤 기능을 할까?
