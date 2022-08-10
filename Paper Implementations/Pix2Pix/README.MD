@@ -45,3 +45,7 @@ cGan이랑 기존 Vanilla GAN에서 데이터의 모드를 제어할 수 있도�
 > GAN은 자체적으로 이미지의 진위 여부를 판단하기 때문에, 다른 생성 모델에 비하여 blurry한 output이 나오는 문제가 적은 편입니다. 하지만 GAN의 성능을 더욱 더 향상시키기 위해, 기본적인 GAN의 목적 함수 뿐만 아니라 L1 loss 함수를 함께 사용하여 현실적인 이미지를 만들 뿐만 아니라 실제 정답과 유사하도록 학습을 시킵니다. L1 loss를 이용하는 이유는 L2 loss를 사용할 때보다 blurry 현상이 덜 발생하였고, Eucledian distance (MSE Loss)를 활용하지 않는 이유는 MSE는 output 결과들에 대한 평균을 만들며 miminimze되는데, 이러한 과정이 blurring을 야기하기 때문입니다.
 
 <img width="431" alt="스크린샷 2022-08-11 오전 1 26 21" src="https://user-images.githubusercontent.com/52812351/183963075-fe883b0a-c071-440e-b20d-5145c253f72d.png">
+
+
+### PatchGAN 활용
+
