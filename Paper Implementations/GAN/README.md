@@ -35,10 +35,21 @@ Generative Adversarial Nets with MNIST dataset
 
 #### Random Noise
 > 이러한 프레임워크는 다양한 방법들을 통해 구현될 수 있는데, GAN 논문에서는 Generative Model에게 random noise를 multilayer perceptron을 거쳐서 넘겨주는 방식으로 sample을 생성하는 방식을 채용했습니다. 아래의 목적 함수에서 z가 noise인데, P_z(z)라는 z의 확률 분포에서 임의로 하나의 sample을 추출하여 이를 Generative Model에 전달하여 가짜 이미지를 생성하고 Discriminative Model로 하여금 해당 이미지의 진위 여부를 판단하게 합니다.
-> 
+
 >   <img width="1007" alt="스크린샷 2022-08-10 오후 9 32 02" src="https://user-images.githubusercontent.com/52812351/183901925-59fe179a-b127-452c-9408-c4b80f43552c.png">
 
 최종적으로 Generative Model을 통해 생성된 데이터의 분포가 원본 이미지들의 분포를 따르게 되는것이 목표입니다.
+
 <img width="142" alt="스크린샷 2022-08-10 오후 9 42 47" src="https://user-images.githubusercontent.com/52812351/183904050-cc763851-96af-4cf2-bfcc-ab5f8322b9de.png">
 
-최종적으로 
+#### 실험 결과
+생성 모델이 우연히 정말로 그럴싸한 데이터를 만들어 내는 것인지, 아니면 정말로 데이터를 완벽하게 이해하고 있어서 활용할만한 가치가 있는 모델인지 알아보는것은 매우 중요한 evaluation 과정입니다. 
+생성자의 메커니즘을 조금 더 들여다보면, 생성자 G의 입력으로 latent vector인 z가 들어가게 됩니다. G의 출력이 사람의 얼굴이라고 했을 때, 왼쪽을 바라보는 얼굴을 만들어 내는 z1의 평균 벡터와 오른쪽을 보고 있는 얼굴을 만들어 내는 z2의 평균을 계산하고 이 두 벡터 사이의 축을 중간에서 interpolation하여 생성자로 입력하면 천천히, 그리고 자연스럽게 회전하는 얼굴이 나오는 것을 확인할 수 있습니다.
+
+<img width="762" alt="스크린샷 2022-08-10 오후 10 10 16" src="https://user-images.githubusercontent.com/52812351/183909692-d82b85cc-be98-49e0-8311-be56f7b15a2a.png">
+
+또한, 논문에서는 이러한 결과가 의도적으로 가장 좋은 성능을 보이는 부분만 가져온것이 아니고, training set을 단순히 암기하여 이와 같은 결과를 내는것이 아님을 강조하였습니다.
+
+
+
+
