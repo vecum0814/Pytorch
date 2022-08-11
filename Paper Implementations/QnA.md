@@ -33,3 +33,9 @@ With the network depth increasing, accuracy gets saturated and then degrades rap
 ## Transposed Convolution이란??
 <img width="1057" alt="스크린샷 2022-08-11 오전 1 28 58" src="https://user-images.githubusercontent.com/52812351/183963588-628bf7be-f806-4a84-9005-0a272b650ada.png">
 
+## Instance Normalization이란?
+
+
+## ReflectionPad2d 사용 이유는?
+
+
