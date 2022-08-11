@@ -33,8 +33,8 @@ Unpaired Dataset만을 가지고 있을 때 일반적인 vanilla GAN의 목표 �
 
 최종적으로 위에서 언급했던것과 같이 논문에서는 기존 Vanilla GAN의 objective function에 mapping G와 F를 동시에 훈련시키고, F(G(x)) -> x와 G(F(y)) -> y를 encourage 시키는 cycle consistency loss를 추가함으로써 unpaired data에서도 image의 key feature는 유지하며 style만 바꾸는 방법이 작동하도록 설계했습니다.
 
-<img width="1011" alt="스크린샷 2022-08-12 오전 12 26 53" src="https![Uploading 스크린샷 2022-08-12 오전 12.27.19.png…]()
-://user-images.githubusercontent.com/52812351/184170600-3ddf9323-704f-4220-ae0f-b611dd022549.png">
+ <img width="996" alt="스크린샷 2022-08-12 오전 12 28 40" src="https://user-images.githubusercontent.com/52812351/184170997-d601c22f-6a5d-41d4-8dcb-0c68deebc52f.png">
+
 
 <img width="696" alt="스크린샷 2022-08-12 오전 12 27 42" src="https://user-images.githubusercontent.com/52812351/184170780-c1e9d833-c4c3-4734-a20b-d1ccf29f4e36.png">
 
