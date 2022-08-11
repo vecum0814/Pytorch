@@ -54,3 +54,30 @@ Paired dataset을 이용해 학습한 Pix2Pix와 비교할 만한 결과가 나�
 
 
 ## Selfie2Anime dataset을 활용한 CycleGAN 실습
+
+### Residual Block
+Generator를 구현하기 위해 내부에 들어갈 Residual Block을 구현했습니다. Residual Block은 이전 layer와 현재 layer의 출력값을 더해서 Forward하기 때문에 모델이 깊어짐에 따라 생기는 기울시 소실 문제를 해결합니다. 
+
+<img width="412" alt="스크린샷 2022-08-12 오전 1 22 53" src="https://user-images.githubusercontent.com/52812351/184181870-332e1c31-cdcc-4442-a098-c3e0d324176b.png">
+
+### Generator
+
+<img width="640" alt="스크린샷 2022-08-12 오전 1 27 13" src="https://user-images.githubusercontent.com/52812351/184182679-610acf78-1e13-45ac-af29-a8da898fe4d4.png">
+
+
+입력 이미지의 Height와 Width를 2배씩 줄여주는 다운 샘플링을 진행한 후 여러개의 Residual Block을 통가시킨 후에 다시 Height와 Width를 2배씩 늘려주는 Upsampling을 진행하는 방식으로 스타일을 변환하는 Generator를 구현했습니다.
+
+### Discriminator 
+
+<img width="671" alt="스크린샷 2022-08-12 오전 1 29 22" src="https://user-images.githubusercontent.com/52812351/184183086-c6f453aa-02a7-466e-996c-53bcfe2771c2.png">
+
+차원의 크기는 지속적으로 늘리되 stride = 2로 설정하여 이미지의 크기는 줄이는 Downsampling을 진행하여 이미지의 크기를 지속적으로 줄여주었고, 마지막에는 PatchGAN 형식의 Discriminator인 만큼 적절한 사이즈로 설정하여 반환했습니다.
+
+### 모델 초기화 및 Hyperparameter 설계
+
+<img width="443" alt="스크린샷 2022-08-12 오전 1 31 57" src="https://user-images.githubusercontent.com/52812351/184183573-fec3732d-18ca-47aa-bd41-9fd113ea1a5e.png">
+<img width="659" alt="스크린샷 2022-08-12 오전 1 32 26" src="https://user-images.githubusercontent.com/52812351/184183667-16679a2d-0758-4fa0-abcc-0ac59ab6b940.png">
+
+논문에서 언급한 방식대로 가중치 초기화를 진행해 주었고, 
+
+
