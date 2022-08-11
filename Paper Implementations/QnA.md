@@ -34,8 +34,8 @@ With the network depth increasing, accuracy gets saturated and then degrades rap
 <img width="1057" alt="스크린샷 2022-08-11 오전 1 28 58" src="https://user-images.githubusercontent.com/52812351/183963588-628bf7be-f806-4a84-9005-0a272b650ada.png">
 
 ## Instance Normalization이란?
-
+Instance Normalization은 데이터 개별로 정규화를 진행합니다. 정규화는 데이터 값의 범위를 비슷하게 조정하는 과정을 말합니다. 배치 정규화는 데이터의 배치 단위로 평균과 분ㅅ나을 구하여 학습의 안정성을 높이지만, INSTANCE Normalization은 이미지에 특화된 정규화 과정으로, 이미지를 개별로 정규화 합니다.
 
 ## ReflectionPad2d 사용 이유는?
-
+Reflection Padding은 점대칭 방식으로 가장 가까운 픽셀로부터 값을 복사해옵니다. ZeroPadding처럼 값 지정이 아닌 더욱 자연스러운 이미지 생성을 위해 사용합니다. 
 
