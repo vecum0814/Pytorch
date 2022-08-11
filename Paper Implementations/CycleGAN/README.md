@@ -38,6 +38,16 @@ Unpaired Dataset만을 가지고 있을 때 일반적인 vanilla GAN의 목표 �
 
 <img width="696" alt="스크린샷 2022-08-12 오전 12 27 42" src="https://user-images.githubusercontent.com/52812351/184170780-c1e9d833-c4c3-4734-a20b-d1ccf29f4e36.png">
 
+## Identity Loss
+
+<img width="484" alt="스크린샷 2022-08-12 오전 1 34 42" src="https://user-images.githubusercontent.com/52812351/184184528-d4d80265-1bf2-4434-bd73-6715db89e363.png">
+
+그림을 사진으로 변경할 때처럼 색상 정보가 반드시 유지되어야 하는 task와 같이 생성된 이미지에 대해 원본 이미지의 색상 구성을 보존해야 할 때는 Identity Loss를 추가로 사용할 수 있습니다. Identity Loss가 없다면, 생성자 G와 F는 입력 이미지의 색감을 언제나 바꿔버릴 수 있기 때문입니다. 식을 살펴보면, 생성자 G에 이미지 y가 들어왔을 때는 단순히 그대로 y를 내보낼 수 있도록 하여 색상 정보를 유지할 수 있게 합니다.
+
+<img width="960" alt="스크린샷 2022-08-12 오전 1 34 57" src="https://user-images.githubusercontent.com/52812351/184184607-b2537854-1dbc-4fda-96b9-9fb4617366dc.png">
+
+
+
 ## 네트워크 아키텍쳐
 * Residual Block을 활용하는 아키텍쳐이고, instancen normalization을 활용합니다.
 * Pix2Pix와 마찬가지로 Discriminator에서 PatchGAN을 활용하여 이미지의 진위 여부를 판별합니다.
@@ -80,4 +90,6 @@ Generator를 구현하기 위해 내부에 들어갈 Residual Block을 구현했
 
 논문에서 언급한 방식대로 가중치 초기화를 진행해 주었고, 
 
+<img width="396" alt="스크린샷 2022-08-12 오전 2 19 42" src="https://user-images.githubusercontent.com/52812351/184194602-4ea4d205-9040-4fcb-b223-f7a3a678080e.png">
 
+Loss 함수들을 선언해 주었습니다.
