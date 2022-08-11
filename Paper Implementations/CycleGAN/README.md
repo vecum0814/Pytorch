@@ -102,5 +102,18 @@ Loss 함수들을 선언해 주었습니다.
 논문에서 언급된 방법과 같이, Discriminator가 과거에 Generator가 생성한 50개의 이미지를 보고 학습을 진행할 수 있도록 위와 같은 방식으로 설계하였습니다. 현재 container의 길이가 50 이하면 조건 없이 삽입하고, 길이가 50 이상일 경우, random하게 0~1 사이의 유리수를 생성하여 그것이 0.7 이상이라면 random한 container의 자리를 새로운 이미지로 Replace 합니다.
 
 
-### 
+### 모델 학습
+
+##### Generator 학습
+* G_AB, G_BA 모두 identity loss를 구해주었고 total loss_identity로 그 둘의 평균을 구했습니다.
+* 이후 각각의 GAN loss를 구해주었고
+* Cycle consistency loss를 구해주었습니다.
+* 이를 바탕으로 Total loss를 계산하였고, G_AB, G_BA 모두에게 동일한 Loss값을 활용하여 역전파 과정을 진행했습니다.
+
+##### Discriminator 학습
+* 각각의 Discriminator에 대해 GAN를 구하여 이를 바탕으로 역전파 과정을 거쳤습니다.
+
+
+### 후기
+Discriminator가 Replay Buffer를 통해 loss function계산을 수행할 때 real, fake에 해당하는 patchGAN의 size를 어떻게 맞출지 참 고민 많이 했다.
 
