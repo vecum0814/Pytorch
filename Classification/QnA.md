@@ -20,3 +20,5 @@ torch.nn.Dropout(p)는 p만큼의 비율로 텐서의 값이 0이 되고, 0이 �
 
 
 ## Cross Entropy Loss란?
+
+## Batch Size에 따른 성능과 훈련 속도의 변화란 어떤게 있을까?
