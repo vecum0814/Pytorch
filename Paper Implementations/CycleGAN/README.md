@@ -38,6 +38,19 @@ Unpaired Dataset만을 가지고 있을 때 일반적인 vanilla GAN의 목표 �
 
 <img width="696" alt="스크린샷 2022-08-12 오전 12 27 42" src="https://user-images.githubusercontent.com/52812351/184170780-c1e9d833-c4c3-4734-a20b-d1ccf29f4e36.png">
 
+## 네트워크 아키텍쳐
+* Residual Block을 활용하는 아키텍쳐이고, instancen normalization을 활용합니다.
+* Pix2Pix와 마찬가지로 Discriminator에서 PatchGAN을 활용하여 이미지의 진위 여부를 판별합니다.
+
+## Training details
+* 기존의 cross-entropy 기반의 Loss 대신에 MSE 기반의 loss를 사용합니다. 이를 사용하여 실제 이미지 분포와 더욱 가까운 이미지를 생성할 수 있었고, 학습이 안정화되었습니다.
+* Model oscillation을 개선하기 위해 가장 최근에 Generator로부터 생성된 이미지 대신 생성자가 이전에 만든 50개의 이미지를 저장해두고, 이를 활용하여 Discriminator를 업데이트 합니다.
+
+## 실험 결과
+
+<img width="640" alt="스크린샷 2022-08-12 오전 1 16 52" src="https://user-images.githubusercontent.com/52812351/184180793-40af45f5-5e8d-4df9-b787-e71fe7f85161.png">
+
+Paired dataset을 이용해 학습한 Pix2Pix와 비교할 만한 결과가 나왔습니다.
 
 
-
+## Selfie2Anime dataset을 활용한 CycleGAN 실습
