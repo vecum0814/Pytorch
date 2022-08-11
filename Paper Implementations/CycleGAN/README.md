@@ -93,3 +93,14 @@ Generator를 구현하기 위해 내부에 들어갈 Residual Block을 구현했
 <img width="396" alt="스크린샷 2022-08-12 오전 2 19 42" src="https://user-images.githubusercontent.com/52812351/184194602-4ea4d205-9040-4fcb-b223-f7a3a678080e.png">
 
 Loss 함수들을 선언해 주었습니다.
+
+### Replay Buffer
+
+<img width="712" alt="스크린샷 2022-08-12 오전 2 31 07" src="https://user-images.githubusercontent.com/52812351/184196551-1ee8bf05-2e16-4def-888b-873e47f62e3e.png">
+
+
+논문에서 언급된 방법과 같이, Discriminator가 과거에 Generator가 생성한 50개의 이미지를 보고 학습을 진행할 수 있도록 위와 같은 방식으로 설계하였습니다. 현재 container의 길이가 50 이하면 조건 없이 삽입하고, 길이가 50 이상일 경우, random하게 0~1 사이의 유리수를 생성하여 그것이 0.7 이상이라면 random한 container의 자리를 새로운 이미지로 Replace 합니다.
+
+
+### 
+
