@@ -39,3 +39,12 @@ Instance Normalization은 데이터 개별로 정규화를 진행합니다. 정�
 ## ReflectionPad2d 사용 이유는?
 Reflection Padding은 점대칭 방식으로 가장 가까운 픽셀로부터 값을 복사해옵니다. ZeroPadding처럼 값 지정이 아닌 더욱 자연스러운 이미지 생성을 위해 사용합니다. 
 
+## Inductive bias는?
+학습자가 처음 보는 입력에 대한 출력을 예측하기 위해 사용하는 일련의 가정 입니다.
+
+## CNN의 Inductive bias란?
+* translation equivaraicne: 입력 위치가 변하면 출력도 동일한 위치로 변해서 나온다는 특징
+* Locality
+
+
+
