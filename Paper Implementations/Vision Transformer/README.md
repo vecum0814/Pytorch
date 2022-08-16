@@ -105,5 +105,5 @@ Argparse 함수를 사용하여 실험 환경을 조절할 수 있게 설계했�
 * train, val, test loader 역시 불러와 주었고,
 * 패치의 사이즈를 알기 위해 trainloader로부터 patch 덩어리 하나를 불러와봤습니다.
 
-* model.py 
+* model.py 함수에서 모델을 불러왔고, 이를 바탕으로 Train 및 Test를 진행했습니다. 
 
