@@ -130,8 +130,11 @@ Argparse 함수를 사용하여 실험 환경을 조절할 수 있게 설계했�
 > > Query, Key, Value 모두 Linear로 정의해 주었는데, 원래 D를 D_h로 넘겨주어야 하지만 D_h == D / k인 만큼 D == k * D_h, 즉 D_h를 헤드 수 만큼 미리 계산 하는 방식으로 구현했습니다.
 > > 각 Head마다의 Query, Key, Value를 구하기 위해서 num_head * head_dim == latent_vec_dim이라는 사실을 활용해 주었고 헤드 수를 앞으로 보내주기 위해 벡터의 갯수와 헤드 수의 위치를 바꿔주었습니다.
 > > Query와 Key의 행렬곱에다가 softmax를 취하여 attention을 구하였고, 이를 value와 곱해주었습니다.
+> > Cifar 10 데이터를 사용하고 실제 실험에 사용된 parameter들을 통해 진행할 경우, Attention의 size는 (100, 8, 257, 257)이 나오고 A x Value 는 (100, 8, 257, 4)가 나오게 됩니다.
+> > 마지막에 Multi-Head를 concatenate 시키기 때문에 (100, 257, 32)로 나오게 됩니다. 
 
 > TFencoderLayer
-> > Transformer Encoder 
+> > Transformer Encoder 하나에 대한 계산으로, 아래의 그림에서 필요한 연산들을 수행합니다.
+
 <img width="236" alt="스크린샷 2022-08-16 오후 6 15 39" src="https://user-images.githubusercontent.com/52812351/184843900-a8de70a4-97c8-44f9-bf92-c49866b3a187.png">
 
