@@ -83,13 +83,27 @@ Original data를 Patch data로 변환하는 함수입니다.
 > Flattened2dPatches:
 > > 입력으로 주어지는 img_size, patch_size, batch_size에 따라 data를 생성할 수 있도록 구현했습니다. 
 > > data name에 따라 데이텃세에 맞는 평균과 표준편차를 이용해 정규화를 진행할 수 있게 하였고 dataset을 적당한 transforms과 함께 구성했습니다. 이 때 PatchGenerator라는 함수는 직접 만들어 적용시켜 주었습니다.
-> > 학
-> > data name에 따라 데이텃세에 맞는 평균과 표준편차를 이용해 정규화를 진행할 수 있게 하였고 dataset을 적당한 transforms과 함께 구성했습니다. 이 때 PatchGenerator라는 함수는 직접 만들어 적용시켜 주었습니다.
+> > 학습을 진행할 때 한 배치당 각 클래스가 동일한 갯수로 들어올 수 있게 weighted random sampler를 도입했습니다. 
 
 > PatchGenerator:
 > > transform 안에서는 이미지 한장을 기준으로 진행해주기 때문에 (C, H, W)로 들어온다는 것을 인지했습니다. 
 > > 이를 바탕으로 Height로 한번, Width로 한번 이미지를 썰어줬고, 올바른 shape로 구성해주었습니다.
 
+### test.py
 
+> accuracy:
+> > 테스트에 필요한 함수를 구성해 주었습니다.
 
+### vit.py
+Argparse 함수를 사용하여 실험 환경을 조절할 수 있게 설계했습니다.
+
+* D로 표현되는 latent_vec_dim을 argparse로 받았습니다.
+* Transformer Encoder내에 존재하는 MLP의 노드 숫자를 임의로 int(latent_vec_dim / 2)로 설정했습니다.
+* Patch 수는 논문에서 언급된 것과 같이 (H x W)/ P^2으로 설정해 주었습니다.
+
+* Image Patch를 불러와야 하기 때문에 patchdata.py의 Flattened2DPatches를 통해 불러왔습니다.
+* train, val, test loader 역시 불러와 주었고,
+* 패치의 사이즈를 알기 위해 trainloader로부터 patch 덩어리 하나를 불러와봤습니다.
+
+* model.py 
 
