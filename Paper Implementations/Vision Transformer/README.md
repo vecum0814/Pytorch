@@ -43,6 +43,39 @@ Inductive bias의 부재로 CNN보다 학습을 위해 더 많은 데이터가 �
 
 <img width="111" alt="스크린샷 2022-08-16 오후 4 56 43" src="https://user-images.githubusercontent.com/52812351/184827933-1b5d6967-d987-4281-b043-33d25a8b912b.png">
 
-우선 Patch + Positional Embedding까지 끝난 Embedded Patches를 입력으로 
+* 우선 Patch + Positional Embedding까지 끝난 Embedded Patches를 입력으로 받아옵니다.
+* Layer Normalization을 거치고
+* Query, Value, Key를 통해 Activation을 구하고
+* Activation을 Value와 곱해서 Self Atention을 구합니다. 
+* Multi head Attention들을 Linear에 한번 통과시켜주고
+* Skip Connection을 통해서 첫번째 Layer Normalization을 거치지 않은 정보와 더해줍니다.
+* Layer Normalization을 한번 더 거치고
+* 이를 MLP에 통과시켜준 다음 (FC층 2개와 GELU 활성화 함수 사용)
+* 두번째 Layer Normalization 직전의 정보와 한번 더 Skip connection을 통해 더해주고
+* 이러한 전체 과정을 L번 반복합니다.
+
+## MLP Head
+
+<img width="253" alt="스크린샷 2022-08-16 오후 5 03 13" src="https://user-images.githubusercontent.com/52812351/184829148-81f62f3e-9bac-4a0c-99d2-c5839454bda3.png">
+
+(N + 1) x D의 shape를 가지고 있는 입력에서 클래스 토큰 부분만 분류에 사용합니다. Layer Normalization을 적용하고 Fuly Connected Layer를 거쳐 prediction 값을 생성합니다.
+
+## 실험 결과
+
+<img width="495" alt="스크린샷 2022-08-16 오후 5 05 31" src="https://user-images.githubusercontent.com/52812351/184829643-14f938cb-fa5a-4690-96cd-7396284e0855.png">
+
+N x (p^2 c) shape를 Linear Projection을 거쳐 N x D shape로 만드는 Embedding Filter의 첫 28개의 속성을 나타낸 그림입니다. 이미지 분류를 수행하는 CNN의 초기 Layer들에서 볼 수 있는 국소적 특징들을 다루는 filter라고 판단 할 수 있습니다.
+
+<img width="363" alt="스크린샷 2022-08-16 오후 5 07 41" src="https://user-images.githubusercontent.com/52812351/184830059-0f089858-41a8-452d-883b-fbdff65fbe34.png">
+
+패치들간의 유사도를 보여주는 그림입니다. 상대적으로 가까운 거리의 패치일수록 높은 cosine similarity를 보이고, 반대일 경우 낮은 유사도를 보인다는 것으로 보아 위치 정보가 잘 학습되었다고 할 수 있습니다.
+
+<img width="332" alt="스크린샷 2022-08-16 오후 5 09 22" src="https://user-images.githubusercontent.com/52812351/184830363-19436f7d-36e1-4bf8-a059-00035ba6533a.png">
+
+네트워크의 깊이와 그에 따른 평균 Attention distance를 보여주는 그래프입니다. Attention Map은 Query와 Key의 행렬곱 연산을 수행한 뒤에 Softmax 연산을 통해 구해지게 되는데, 이 때 얼마나 가까운 거리, 혹은 먼 거리의 픽셀들까지 의미있게 고려했나에 따라서 Mean attention distance가 결정되게 됩니다. Network Depth가 얕을때는 가까운 거리 위주로 집중하는 추세가 보였다면, 네트워크가 깊게 들어갈 수록 전체를 보는 경향이 두드러지는데, 이러한 특징은 CNN에서도 Convolutional Layer가 깊어질수록 이전 Convolutional Layer의 output을 바탕으로 더욱 넓은 관점에서 보는 것과 비슷하다고 볼 수 있겠습니다.
+
+
+
+
 
 
