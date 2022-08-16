@@ -75,6 +75,20 @@ N x (p^2 c) shape를 Linear Projection을 거쳐 N x D shape로 만드는 Embedd
 네트워크의 깊이와 그에 따른 평균 Attention distance를 보여주는 그래프입니다. Attention Map은 Query와 Key의 행렬곱 연산을 수행한 뒤에 Softmax 연산을 통해 구해지게 되는데, 이 때 얼마나 가까운 거리, 혹은 먼 거리의 픽셀들까지 의미있게 고려했나에 따라서 Mean attention distance가 결정되게 됩니다. Network Depth가 얕을때는 가까운 거리 위주로 집중하는 추세가 보였다면, 네트워크가 깊게 들어갈 수록 전체를 보는 경향이 두드러지는데, 이러한 특징은 CNN에서도 Convolutional Layer가 깊어질수록 이전 Convolutional Layer의 output을 바탕으로 더욱 넓은 관점에서 보는 것과 비슷하다고 볼 수 있겠습니다.
 
 
+## Vision Transformer with CIFAR 10
+
+### patchdata.py
+Original data를 Patch data로 변환하는 함수입니다.
+
+> Flattened2dPatches:
+> > 입력으로 주어지는 img_size, patch_size, batch_size에 따라 data를 생성할 수 있도록 구현했습니다. 
+> > data name에 따라 데이텃세에 맞는 평균과 표준편차를 이용해 정규화를 진행할 수 있게 하였고 dataset을 적당한 transforms과 함께 구성했습니다. 이 때 PatchGenerator라는 함수는 직접 만들어 적용시켜 주었습니다.
+> > 학
+> > data name에 따라 데이텃세에 맞는 평균과 표준편차를 이용해 정규화를 진행할 수 있게 하였고 dataset을 적당한 transforms과 함께 구성했습니다. 이 때 PatchGenerator라는 함수는 직접 만들어 적용시켜 주었습니다.
+
+> PatchGenerator:
+> > transform 안에서는 이미지 한장을 기준으로 진행해주기 때문에 (C, H, W)로 들어온다는 것을 인지했습니다. 
+> > 이를 바탕으로 Height로 한번, Width로 한번 이미지를 썰어줬고, 올바른 shape로 구성해주었습니다.
 
 
 
