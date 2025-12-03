@@ -1,5 +1,74 @@
 import torch
 import torch.nn as nn
+import math  # 추가
+
+def get_1d_sincos_pos_embed(embed_dim: int, positions: torch.Tensor):
+    """
+    1D sinusoidal positional encoding
+    positions: (N,) 0,1,2,... 위치 인덱스
+    return: (N, embed_dim)
+    """
+    assert embed_dim % 2 == 0
+    # 각 차원마다 다른 주파수
+    omega = torch.arange(embed_dim // 2, dtype=torch.float32)
+    omega = 1.0 / (10000 ** (omega / (embed_dim // 2)))  # (dim/2,)
+
+    out = positions.unsqueeze(1) * omega.unsqueeze(0)      # (N, dim/2)
+    emb = torch.cat([torch.sin(out), torch.cos(out)], dim=1)  # (N, dim)
+    return emb
+
+
+def get_2d_sincos_pos_embed(embed_dim: int, grid_h: int, grid_w: int):
+    """
+    2D sinusoidal positional encoding
+    grid_h, grid_w: 패치 그리드의 세로/가로 길이
+    return: (grid_h * grid_w, embed_dim)
+    """
+    assert embed_dim % 4 == 0, "embed_dim은 4의 배수여야 2D sin/cos를 깔끔하게 나눌 수 있음"
+
+    half_dim = embed_dim // 2  # 절반은 H용, 절반은 W용
+
+    # 0,1,2,... 형태의 위치 인덱스
+    pos_h = torch.arange(grid_h, dtype=torch.float32)  # (H,)
+    pos_w = torch.arange(grid_w, dtype=torch.float32)  # (W,)
+
+    # H축 1D sin/cos -> (H, half_dim)
+    emb_h = get_1d_sincos_pos_embed(half_dim, pos_h)
+    # W축 1D sin/cos -> (W, half_dim)
+    emb_w = get_1d_sincos_pos_embed(half_dim, pos_w)
+
+    # (H, W, half_dim)
+    emb_h = emb_h[:, None, :].expand(grid_h, grid_w, half_dim)
+    emb_w = emb_w[None, :, :].expand(grid_h, grid_w, half_dim)
+
+    # 최종 (H, W, embed_dim)
+    emb = torch.cat([emb_h, emb_w], dim=2)
+
+    # (H*W, embed_dim)
+    return emb.reshape(grid_h * grid_w, embed_dim)
+
+
+def build_2d_sincos_position_embedding(embed_dim: int, num_patches: int, add_cls_token: bool = True):
+    """
+    ViT에서 바로 쓸 수 있는 형태로 만드는 helper
+    num_patches: 패치 개수 (H * W, 정사각형이라면 sqrt(num_patches) == H == W)
+    return: (1, num_patches + add_cls_token, embed_dim)
+    """
+    grid_size = int(math.sqrt(num_patches))
+    assert grid_size * grid_size == num_patches, "num_patches는 정사각형 그리드(H*W)여야 함"
+
+    # (N, D)
+    pos = get_2d_sincos_pos_embed(embed_dim, grid_size, grid_size)
+    pos = pos.unsqueeze(0)  # (1, N, D)
+
+    if add_cls_token:
+        # CLS 토큰용 위치벡터는 0으로 두는 경우가 많음
+        cls_pos = torch.zeros(1, 1, embed_dim)
+        pos = torch.cat([cls_pos, pos], dim=1)  # (1, N+1, D)
+
+    return pos
+
+
 
 class LinearProjection(nn.Module):
 
@@ -7,7 +76,14 @@ class LinearProjection(nn.Module):
         super().__init__()
         self.linear_proj = nn.Linear(patch_vec_size, latent_vec_dim) # (1 * p^2 c) -> (1 x D)
         self.cls_token = nn.Parameter(torch.randn(1, latent_vec_dim)) # (1xD)의 클래스 토큰을 가장 왼쪽에 concat. 시켜줘야 하기 때문에 우선 (1xD) 사이즈의 학습 가능한 파라미터로 정의.
-        self.pos_embedding = nn.Parameter(torch.randn(1, num_patches + 1, latent_vec_dim))
+        pos_embedding = build_2d_sincos_position_embedding(
+            embed_dim=latent_vec_dim,
+            num_patches=num_patches,
+            add_cls_token=True,
+        )  # (1, num_patches + 1, latent_vec_dim)
+
+        # 고정 positional encoding이므로 buffer로 등록 (학습 X, .to(device)될 때 같이 이동)
+        self.register_buffer("pos_embedding", pos_embedding, persistent=False)
         self.dropout = nn.Dropout(drop_rate)
 
     def forward(self, x): # 배치 단위로 (b x N x p^2 c) 들어온다.
